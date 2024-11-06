@@ -1,5 +1,3 @@
-
-<<<<<<< HEAD
 <div align="center">
 
 
@@ -73,32 +71,3 @@
 |:---:|:---:|:---:|:---:|
 |2020202023|2021202069|2020202087|2020202063|
 |[김동현](https://github.com/ehdgus3130)|[박원국](https://github.com/parkwonkuku)|[백민재](https://github.com/akswo)|[정승수](https://github.com/Chungss84)
-=======
-## Title : Light Game
-
-# Abstract (i.e., a summary of your project topic) 
-
-# One or more images that succinctly represent your project 
-
-## Project schedule 
-
-(Note that the project publishing deadline is on Tuesday, December 17th) 
-
-
-## Team roles & development areas (i.e., “who does what”) 
-<ul>
-    <li>2020202023 김동현 : 총괄 및 게임 제작</li>
-    <li>2021202069 박원국 : 게임제작</li>
-    <li>2020202063 정승수 : 웹 디자인</li>
-    <li>2020202087 백민재 : 웹 디자인</li>
-</ul>
-
-## List of technologies required for executing your project 
-<ul>
-    <li>HTML</li>
-    <li>CSS</li>
-    <li>JavaScript</li>
-    <li>Unity</li>
-    <li>Node.js</li>
-</ul>
->>>>>>> 39a63bd8032f9c9da2e9ca78e14d05f2a7bfb955
