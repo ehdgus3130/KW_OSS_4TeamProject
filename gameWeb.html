@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <title>Page Title</title>
     <style>
         .container {
             width: 640px;
         }
+
         /*출처*/
-        .link{
+        .link {
             position: absolute;
             top: 1000px;
             left: 20px;
         }
+
         /*게임 썸네일*/
         #flypangpang {
             width: 450px;
@@ -21,13 +24,14 @@
             top: 100px;
             left: 20px;
         }
-        
+
         /* 다크모드 스타일 */
         body.dark-mode {
             background: #121212;
             color: #ffffff;
             transition: background 0.5s, color 0.5s;
         }
+
         /*달과 별 클릭 시 다크모드*/
         #toggle-icon {
             cursor: pointer;
@@ -37,7 +41,6 @@
             top: 0px;
             right: 20px;
             transition: transform 0.5s;
-
         }
 
         .navbar-title {
@@ -47,13 +50,57 @@
             position: fixed;
             left: 200px;
         }
+
         .navbar-title img {
             width: 50px;
             height: 50px;
             margin-right: 10px;
         }
+
+        .game-title-container {
+            position: absolute;
+            top: 380px;
+            left: 20px;
+            width: 450px;
+        }
+
+        /* 게임 제목 텍스트 */
+        .game-title-text {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        /* 게임 장르 텍스트 */
+        .game-genre-text {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+            cursor: pointer;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        /* 게임 별점 표시 */
+        .game-rating {
+            display: inline-block;
+            color: #FFD700;
+            font-size: 14px;
+        }
+
+        /* 다크모드에서의 텍스트 스타일 */
+        body.dark-mode .game-title-text {
+            color: #ffffff;
+        }
+
+        body.dark-mode .game-genre-text {
+            color: #cccccc;
+        }
     </style>
 </head>
+
 <body>
     <!-- navbar -->
     <nav class="navbar bg-body-tertiary">
@@ -64,16 +111,23 @@
             </span>
         </div>
     </nav>
-    <div class = "link">    
-        <a href="https://kr.freepik.com/free-vector/hand-drawn-emotes-element-collection_36304101.htm#fromView=search&page=1&position=4&uuid=303d980b-f149-4729-9909-1413ad9e60dd">출처 freepik</a>
+    <div class="link">
+        <a
+            href="https://kr.freepik.com/free-vector/hand-drawn-emotes-element-collection_36304101.htm#fromView=search&page=1&position=4&uuid=303d980b-f149-4729-9909-1413ad9e60dd">출처
+            freepik</a>
     </div>
-    
+
     <div class="container">
-        <div class="d-flex align-items-center mb-2 mt-2">
-            <img src="./image/flypangpang.png" id="flypangpang" class="ms-1" />
-        </div>
-        <div class="d-flex">
-            <div class="flex-grow-1 bg-light rounded-2 p-2 me-1 w-50"></div>
+        <div class="d-flex flex-column align-items-center mb-2 mt-2">
+            <a href="https://parkwonkuku.github.io/FlyPangPang/" id="game-link" target="_blank"
+                rel="noopener noreferrer">
+                <img src="./image/flypangpang.png" id="flypangpang" class="ms-1" alt="Fly Pang Pang Game" />
+            </a>
+            <div class="game-title-container">
+                <p class="game-title-text" id="game-title">[팡팡이 게임] Fly Pang Pang</p>
+                <p class="game-genre-text" id="game-genre">아케이드</p>
+                <div class="game-rating">★★★★☆</div>
+            </div>
         </div>
     </div>
 
@@ -108,6 +162,23 @@
         }
 
         toggleIcon.addEventListener("click", toggleDarkMode);
+
+        // 게임 제목과 장르 클릭 이벤트 처리
+        const gameTitle = document.getElementById("game-title");
+        const gameUrl = "https://parkwonkuku.github.io/FlyPangPang/";
+
+        function openGamePage() {
+            window.open(gameUrl, '_blank', 'noopener,noreferrer');
+        }
+
+        gameTitle.addEventListener("click", openGamePage);
+
+        // 게임 이미지 클릭 이벤트 처리
+        const gameLink = document.getElementById("game-link");
+        gameLink.addEventListener("click", function (event) {
+            console.log("게임 페이지로 이동합니다: https://parkwonkuku.github.io/FlyPangPang/");
+        });
     </script>
 </body>
+
 </html>
