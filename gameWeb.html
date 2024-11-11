@@ -23,6 +23,19 @@
             position: absolute;
             top: 100px;
             left: 20px;
+            border-radius: 15px; /* 이미지에도 라운드 적용 */
+        }
+
+        /* 비디오 썸네일 */
+        #flypangpang-video {
+            position: absolute;
+            top: 450px;
+            left: 20px;
+            width: 450px;
+            height: 270px;
+            display: none;
+            border-radius: 50px; /* 비디오 모서리 라운드 */
+            overflow: hidden; /* 비디오 라운드를 위해 내용이 넘치지 않도록 설정 */
         }
 
         /* 다크모드 스타일 */
@@ -112,15 +125,12 @@
         </div>
     </nav>
     <div class="link">
-        <a
-            href="https://kr.freepik.com/free-vector/hand-drawn-emotes-element-collection_36304101.htm#fromView=search&page=1&position=4&uuid=303d980b-f149-4729-9909-1413ad9e60dd">출처
-            freepik</a>
+        <a href="https://kr.freepik.com/free-vector/hand-drawn-emotes-element-collection_36304101.htm#fromView=search&page=1&position=4&uuid=303d980b-f149-4729-9909-1413ad9e60dd">출처 freepik</a>
     </div>
 
     <div class="container">
         <div class="d-flex flex-column align-items-center mb-2 mt-2">
-            <a href="https://parkwonkuku.github.io/FlyPangPang/" id="game-link" target="_blank"
-                rel="noopener noreferrer">
+            <a href="https://parkwonkuku.github.io/FlyPangPang/" id="game-link" target="_blank" rel="noopener noreferrer">
                 <img src="./image/flypangpang.png" id="flypangpang" class="ms-1" alt="Fly Pang Pang Game" />
             </a>
             <div class="game-title-container">
@@ -131,52 +141,54 @@
         </div>
     </div>
 
-    <img id="toggle-icon" src="./image/moon.png" alt="Toggle Dark Mode" />
+    <!-- 마우스 올렸을 때 나타나는 비디오 -->
+    <video id="flypangpang-video" src="./video/flypangpangPlay.mp4" muted></video>
+
+    <img id="toggle-icon" src="./image/sun.png" alt="Toggle Dark Mode" />
 
     <script>
-        let addIcon = document.querySelector("#thumbnail");
-        let input = document.querySelector("#plan-input");
-        let video = document.querySelector("#video");
+        const gameImage = document.getElementById("flypangpang");
+        const flypangpangVideo = document.getElementById("flypangpang-video");
+
+        // 이미지에 마우스를 올렸을 때 비디오를 보여줌
+        gameImage.addEventListener("mouseenter", () => {
+            flypangpangVideo.style.display = "block";
+            flypangpangVideo.play();
+        });
+
+        // 이미지에서 마우스를 뗐을 때 비디오를 숨김
+        gameImage.addEventListener("mouseleave", () => {
+            flypangpangVideo.style.display = "none";
+            flypangpangVideo.pause();
+            flypangpangVideo.currentTime = 0; // 비디오 재생 위치 초기화
+        });
 
         // 다크모드 전환 함수
         const toggleIcon = document.getElementById("toggle-icon");
-        const fullMoonImage = document.getElementById("fullmoon");
         let isDarkMode = false;
 
         function toggleDarkMode() {
             isDarkMode = !isDarkMode;
             document.body.classList.toggle("dark-mode", isDarkMode);
-            toggleIcon.src = isDarkMode ? "./image/sun.png" : "./image/moon.png";
+            toggleIcon.src = isDarkMode ? "./image/moon.png" : "./image/sun.png";
             toggleIcon.alt = isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode";
 
             if (isDarkMode) {
-                fullMoonImage.style.display = "block";
                 document.body.style.backgroundImage = "url('./image/night.jpg')";
-                document.body.style.backgroundSize = "auto";
+                document.body.style.backgroundSize = "cover";
                 document.body.style.backgroundRepeat = "no-repeat";
                 document.body.style.backgroundPosition = "center";
             } else {
-                fullMoonImage.style.display = "none";
                 document.body.style.backgroundImage = "none";
             }
         }
 
         toggleIcon.addEventListener("click", toggleDarkMode);
 
-        // 게임 제목과 장르 클릭 이벤트 처리
+        // 게임 제목 클릭 이벤트 처리
         const gameTitle = document.getElementById("game-title");
-        const gameUrl = "https://parkwonkuku.github.io/FlyPangPang/";
-
-        function openGamePage() {
-            window.open(gameUrl, '_blank', 'noopener,noreferrer');
-        }
-
-        gameTitle.addEventListener("click", openGamePage);
-
-        // 게임 이미지 클릭 이벤트 처리
-        const gameLink = document.getElementById("game-link");
-        gameLink.addEventListener("click", function (event) {
-            console.log("게임 페이지로 이동합니다: https://parkwonkuku.github.io/FlyPangPang/");
+        gameTitle.addEventListener("click", () => {
+            window.open("https://parkwonkuku.github.io/FlyPangPang/", '_blank', 'noopener,noreferrer');
         });
     </script>
 </body>
