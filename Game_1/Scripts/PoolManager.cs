@@ -21,14 +21,14 @@ public class PoolManager : MonoBehaviour
 
         foreach (GameObject item in pools[index])
         {
-            if (!item.activeSelf) // 활용되고 있지 않으면
+            if (!item.activeSelf)
             {
                 select = item;
                 select.SetActive(true);
                 break;
             }
         }
-        if (select == null) // 활용할 것이 없다면
+        if (select == null)
         {
             select = Instantiate(prefabs[index], transform);
             pools[index].Add(select);

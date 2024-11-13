@@ -14,8 +14,7 @@ public class Heart : MonoBehaviour
         if (!GameManager.instance.isLive) return;
         if(health != GameManager.instance.health)
         {
-            hearts[health - 1].SetActive(false);
-            health -= 1;
+            hearts[--health].SetActive(false);
         }
     }
 }

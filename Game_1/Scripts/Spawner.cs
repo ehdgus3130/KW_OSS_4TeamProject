@@ -4,9 +4,13 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public Transform[] spawnPoint;
+    public SpawnData[] spawnDatas;
 
+    int i = 1;
+    int level = 0;
     float timer = 0f;
     float spawnTime = 2f;
+    float playTime = 0f;
     void Awake()
     {
         spawnPoint = GetComponentsInChildren<Transform>();
@@ -20,6 +24,13 @@ public class Spawner : MonoBehaviour
         {
             spawn();
             timer = 0f;
+        }
+        
+        if(playTime + 20f <= GameManager.instance.gameTime && level < spawnDatas.Length - 1)
+        {
+            spawnTime = Mathf.Max(1.0f, spawnTime - 0.1f);
+            playTime = GameManager.instance.gameTime;
+            level++;
         }
     }
     void spawn()
@@ -39,6 +50,14 @@ public class Spawner : MonoBehaviour
 
             GameObject enemy = GameManager.instance.pool.Get(0);
             enemy.transform.position = spawnPoint[randomIndex].position;
+            enemy.GetComponent<EnemyController>().Init(spawnDatas[level]);
         }
     }
+}
+
+[System.Serializable]
+public class SpawnData
+{
+    public int maxHealth;
+    public int speed;
 }

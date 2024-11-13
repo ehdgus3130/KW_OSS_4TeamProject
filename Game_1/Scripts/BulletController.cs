@@ -1,25 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    public float speed;
-    public int damage = 1;
+    [SerializeField]
+    float speed = 10f;
+    [SerializeField]
+    int damage;
 
     Transform player;
     Rigidbody2D rigid;
-    void Start()
+    void Awake()
     {
         player = GameManager.instance.player.GetComponent<Transform>();
         rigid = GetComponent<Rigidbody2D>();
+    }
+    public void Init(int _damage)
+    {
+        damage = _damage;
     }
     void Update()
     {
         if(!GameManager.instance.isLive) return;
 
-        if(rigid.position.x >= 10f) gameObject.SetActive(false);
+        if (rigid.position.x >= 10f)
+        {
+            if(gameObject.tag == "Skill")
+            {
+                gameObject.tag = "Bullet";
+                gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            }
+            gameObject.SetActive(false);
+        }
     }
     void FixedUpdate()
     {
@@ -29,9 +40,14 @@ public class BulletController : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (gameObject.tag == "Skill") return;
         if(!collision.CompareTag("Enemy")) return;
-
+        
         rigid.velocity = Vector2.zero;
         gameObject.SetActive(false);
+    }
+    public int getDamage()
+    {
+        return damage;
     }
 }
