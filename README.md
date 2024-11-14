@@ -35,7 +35,7 @@
 ### 각 페이지 디자인
 | 메인 페이지 | 게임 페이지 |
 |:---:| :---: |
-|<img src="./ReadMeFile/MainPage.png" width="450"/>|<img src="./ReadMeFile/GameSPage.png" width="450"/>|
+|<img src="./ReadMeFile/MainPage.png" width="450"/>|<img src="./ReadMeFile/GamePage.png" width="450"/>|
 |메인 페이지 디자인 ver 1|게임 페이지 디자인 ver 2|
 
 <br />
