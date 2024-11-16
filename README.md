@@ -37,7 +37,7 @@
 ### 화면 구성
 |웹 디자인 구성| 게임화면 |
 |:---:| :---: |
-|<img src="./ReadMeFile/WebScreen.png" width="450"/>|<img src="./ReadMeFile/GameScreen.png" width="450"/>|
+|<img src="./ReadMeFile/WebScreen.png" width="300"/>|<img src="./ReadMeFile/GameScreen.png" width="300"/>|
 |기본적인 홈페이지 예상 구성화면|게임 플레이시 예상 구성화면|
 
 <br />
@@ -45,7 +45,7 @@
 ### 각 페이지 디자인
 | 메인 페이지 | 게임 페이지 |
 |:---:| :---: |
-|<img src="./ReadMeFile/MainPage.png" width="450"/>|<img src="./ReadMeFile/GamePage.png" width="400"/>|
+|<img src="./ReadMeFile/MainPage.png" width="300"/>|<img src="./ReadMeFile/GamePage.png" width="250"/>|
 |메인 페이지 디자인 ver 2|게임 페이지 디자인 ver 2|
 
 <br />
@@ -89,15 +89,15 @@
 <br />
 
 ## 💁‍♂️ 프로젝트 팀원
-- [2020202023 김동현](https://github.com/ehdgus3130)
+- [김동현 2020202023](https://github.com/ehdgus3130)
     - 총괄
     - 게임 및 게임 페이지 제작
-- [2021202069 박원국](https://github.com/parkwonkuku)
+- [박원국 2021202069](https://github.com/parkwonkuku)
     - 게임 및 게임 페이지 제작
     - 각 페이지 디자인
-- [2020202087 백민재](https://github.com/akswo)
+- [백민재 2020202087](https://github.com/akswo)
     - 메인 페이지 제작
-- [2020202063 정승수](https://github.com/Chungss84)
+- [정승수 2020202063](https://github.com/Chungss84)
     - 메인 페이지 제작
 
 - 공통 작업 : 서버 구축
