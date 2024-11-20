@@ -2,7 +2,13 @@
 <html lang="ko">
 
 <head>
-    <title>Page Title</title>
+    <!-- 페이지 제목 -->
+    <title>쥬니어광운</title>
+
+    <!-- Bootstrap CSS 링크 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css">
+    <!-- 커스텀 스타일 -->
     <style>
         /* navbar-title 스타일 */
         .navbar-title {
@@ -10,9 +16,11 @@
             display: flex;
             align-items: center;
             position: fixed;
-            left: 500px;
+            left: 20px;
+            top: 10px;
         }
 
+        /* 로고 스타일 */
         .navbar-title img {
             width: 80px;
             height: 100px;
@@ -23,22 +31,32 @@
         .search-container {
             display: flex;
             align-items: center;
-            margin-left: 20px;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
+        /* 검색창 입력 스타일 */
         .search-input {
-            padding: 10px; /* 패딩 증가 */
-            font-size: 18px; /* 글씨 크기 증가 */
-            width: 500px; /* 너비 증가 */
+            padding: 10px;
+            /* 패딩 증가 */
+            font-size: 18px;
+            /* 글씨 크기 증가 */
+            width: 500px;
+            /* 너비 증가 */
             border: 1px solid #ddd;
             border-radius: 5px;
             outline: none;
             margin-right: 5px;
         }
 
+        /* 검색 버튼 스타일 */
         .search-button {
-            padding: 10px 15px; /* 패딩 증가 */
-            font-size: 18px; /* 글씨 크기 증가 */
+            padding: 10px 15px;
+            /* 패딩 증가 */
+            font-size: 18px;
+            /* 글씨 크기 증가 */
             cursor: pointer;
             border: none;
             border-radius: 5px;
@@ -46,65 +64,20 @@
             color: white;
         }
 
-
-        /* 검색 결과 컨테이너 */
+        /* 게임 리스트 컨테이너 */
         .game-container {
-            display: none; /* 처음에 숨김 */
-            position: absolute;
-            top: 200px; /* 검색창 바로 아래로 위치 조정 */
-            left: 300px;
-        }
-        
-        .container {
-            width: 640px;
+            margin-top: 150px;
         }
 
-        /*출처*/
-        .link {
-            position: absolute;
-            top: 1000px;
-            left: 20px;
-        }
-
-        /*게임 썸네일*/
-        #flypangpang {
+        /* 게임 썸네일 스타일 */
+        .game-thumbnail {
             width: 450px;
             height: 270px;
             cursor: pointer;
-            position: absolute;
-            top: 200px;
-            left: 300px;
-            border-radius: 15px; /* 이미지에도 라운드 적용 */
-        }
-        #Run_and_jump {
-            width: 450px;
-            height: 270px;
-            cursor: pointer;
-            position: absolute;
-            top: 200px;
-            left: 900px;
-            border-radius: 15px; /* 이미지에도 라운드 적용 */
-        }
-        /* 비디오 썸네일 */
-        #flypangpang-video {
-            position: absolute;
-            top: 450px;
-            left: 300px;
-            width: 450px;
-            height: 270px;
-            display: none;
-            border-radius: 50px; /* 비디오 모서리 라운드 */
-            overflow: hidden; /* 비디오 라운드를 위해 내용이 넘치지 않도록 설정 */
+            border-radius: 15px;
         }
 
-        .game-title-container {
-            position: absolute;
-            top: 480px;
-            left: 300px;
-            width: 450px;
-        }
-
-        /* 게임 제목 텍스트 */
+        /* 게임 제목 스타일 */
         .game-title-text {
             font-size: 16px;
             color: #333;
@@ -113,7 +86,7 @@
             cursor: pointer;
         }
 
-        /* 게임 장르 텍스트 */
+        /* 게임 장르 스타일*/
         .game-genre-text {
             font-size: 14px;
             color: #666;
@@ -123,64 +96,29 @@
             margin-right: 10px;
         }
 
-        /* 게임 별점 표시 */
+        /* 게임 별점 스타일*/
         .game-rating {
             display: inline-block;
             color: #FFD700;
             font-size: 14px;
         }
-        
-        .game2-title-container {
-            position: absolute;
-            top: 480px;
-            left: 900px;
-            width: 450px;
-        }
 
-        /* 게임 제목 텍스트 */
-        .game2-title-text {
-            font-size: 16px;
-            color: #333;
-            margin: 0;
-            padding: 8px 0;
-            cursor: pointer;
-        }
-
-        /* 게임 장르 텍스트 */
-        .game2-genre-text {
-            font-size: 14px;
-            color: #666;
-            margin: 0;
-            cursor: pointer;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        /* 게임 별점 표시 */
-        .game2-rating {
-            display: inline-block;
-            color: #FFD700;
-            font-size: 14px;
-        }
-        
-        /* 다크모드 스타일 */
-        body.dark-mode {
-            background: #121212;
-            color: #ffffff;
-            transition: background 0.5s, color 0.5s;
-        }
-
-        /*달과 별 클릭 시 다크모드*/
         #toggle-icon {
             cursor: pointer;
             width: 80px;
             height: 80px;
             position: fixed;
-            top: 0px;
+            top: 10px;
             right: 20px;
             transition: transform 0.5s;
         }
-        /* 다크모드에서의 텍스트 스타일 */
+
+        /* 다크모드 스타일 */
+        body.dark-mode {
+            background: #121212;
+            color: #ffffff;
+        }
+
         body.dark-mode .game-title-text {
             color: #ffffff;
         }
@@ -188,13 +126,101 @@
         body.dark-mode .game-genre-text {
             color: #cccccc;
         }
-        body.dark-mode .game2-title-text {
-            color: #ffffff;
+        body.dark-mode .card-title,
+        body.dark-mode .card-text{
+            color:#ffffff
         }
 
-        body.dark-mode .game2-genre-text {
-            color: #cccccc;
+        /* 장르 네비게이션 스타일 */
+        .genre-nav {
+            margin-top: 120px;
         }
+
+        /* 네비게이션 링크 스타일 */
+        .nav-pills .nav-link {
+            color: #333;
+            border-radius: 20px;
+            padding: 8px 20px;
+            margin: 0 5px;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: #911741;
+            color: white;
+        }
+
+        /* 더 많은 게임 스타일 */
+        .more-games {
+            margin-top: 50px;
+        }
+
+        .more-games .card {
+            border: none;
+            background-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .more-games .card-img-top {
+            border-radius: 15px;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* 페이지네이션 점 스타일 */
+        .pagination-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ddd;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* 활성화된 점의 색상을 강조 색상으로 설정 */
+        .dot.active {
+            background-color: #911741;
+        }
+
+        /* 다크모드에서의 추가 스타일 */
+        body.dark-mode .nav-pills .nav-link {
+            color: #fff;
+        }
+
+        body.dark-mode .card {
+            background-color: #333;
+        }
+
+        body.dark-mode .dot {
+            background-color: #666;
+        }
+
+        body.dark-mode .dot.active {
+            background-color: #911741;
+        }
+        
+    /*폰트 및 부드러운 다크모드 화이트 모드 전환*/
+        body {
+            font-family: "Galmuri9", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow-y: auto;
+            background-color: white;
+            color: black;
+            transition: background-color 0.5s, color 0.5s;/*화면 모드 변경 시 부드럽게 전환*/
+        }
+    
     </style>
 </head>
 
@@ -205,107 +231,156 @@
             <span class="navbar-title">
                 <img src="./image/character1.png" alt="Character Image" />
                 <h3>쥬니어광운</h3>
-                <!-- 검색창 추가 -->
-                <div class="search-container">
-                    <input type="text" id="search-input" class="search-input" placeholder="Search for a game" />
-                    <button id="search-button" class="search-button">검색</button>
-                </div>
             </span>
+            <!-- 검색창 추가 -->
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for a game" />
+                <button id="search-button" class="search-button">검색</button>
+            </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="d-flex flex-column align-items-center mb-2 mt-2">
-            <a href="https://parkwonkuku.github.io/FlyPangPang/" id="game-link" target="_blank" rel="noopener noreferrer">
-                <img src="./image/flypangpang.png" id="flypangpang" class="ms-1" alt="Fly Pang Pang Game" />
-            </a>
-            <div class="game-title-container">
-                <p class="game-title-text" id="game-title">[슈팅 게임] Fly Pang Pang</p>
-                <p class="game-genre-text" id="game-genre">아케이드</p>
-                <div class="game-rating">★★★★☆</div>
+
+    <!-- 장르 네비게이션 -->
+    <div class="genre-nav">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid justify-content-center">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#">전체</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">장르1</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">장르2</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">장르3</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">장르4</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">장르5</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">장르6</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">장르7</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">장르8</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">장르9</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 오늘의 신작 게임 -->
+    <div class="container game-container">
+        <h2 class="text-center mb-4">오늘의 신작 게임!!</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="https://parkwonkuku.github.io/FlyPangPang/" id="game-link" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="./image/flypangpang.png" id="flypangpang" class="game-thumbnail"
+                        alt="Fly Pang Pang Game" />
+                </a>
+                <div class="game-title-container mt-2">
+                    <p class="game-title-text" id="game-title">[슈팅 게임] Fly Pang Pang</p>
+                    <p class="game-genre-text" id="game-genre">아케이드</p>
+                    <div class="game-rating">★★★★☆</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <a href="https://github.com/ehdgus3130/KW_OSS_4TeamProject/tree/Web" id="game2-link" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="./image/jump.png" id="Run_and_jump" class="game-thumbnail" alt="Run and Jump Game" />
+                </a>
+                <div class="game-title-container mt-2">
+                    <p class="game-title-text" id="game2-title">[어드벤쳐] Jump</p>
+                    <p class="game-genre-text" id="game2-genre">액션</p>
+                    <div class="game-rating">★☆☆☆☆</div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="game2-container">
-        <a href="https://github.com/ehdgus3130/KW_OSS_4TeamProject/tree/Web" id="game2-link" target="_blank" rel="noopener noreferrer">
-            <img src="./image/jump.png" id="Run_and_jump" class="ms-2" alt="Run and Jump Game" />
-        </a>
-        <div class="game2-title-container">
-            <p class="game2-title-text" id="game2-title2">[어드벤쳐] Jump</p>
-            <p class="game2-genre-text" id="game2-genre2">액션</p>
-            <div class="game2-rating">★☆☆☆☆</div>
-        </div>
-    </div>
-    
-    <!-- 검색 결과로 나타날 게임 정보 -->
-    <div class="game-container" id="game-container">
-        <div class="link">
-            <a href="https://kr.freepik.com/free-vector/hand-drawn-emotes-element-collection_36304101.htm#fromView=search&page=1&position=4&uuid=303d980b-f149-4729-9909-1413ad9e60dd">출처 freepik</a>
-        </div>
 
-        <div class="d-flex flex-column align-items-center mb-2 mt-2">
-            <a href="https://parkwonkuku.github.io/FlyPangPang/" id="game-link" target="_blank" rel="noopener noreferrer">
-                <img src="./image/flypangpang.png" id="flypangpang" class="ms-1" alt="Fly Pang Pang Game" />
-            </a>
-            <div class="game-title-container">
-                <p class="game-title-text" id="game-title">[팡팡이 게임] Fly Pang Pang</p>
-                <p class="game-genre-text" id="game-genre">아케이드</p>
-                <div class="game-rating">★★★★☆</div>
+    <!-- 더 많은 게임 -->
+    <div class="more-games">
+        <div class="container">
+            <h2 class="text-center mb-4">더 많은 게임</h2>
+            <div class="row row-cols-2 row-cols-md-5 g-4" id="more-games-container">
+                <!-- 게임 썸네일은 JavaScript로 동적으로 추가됩니다 -->
+            </div>
+
+            <!-- 페이지네이션 점 -->
+            <div class="pagination-dots mt-4">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <!-- 다음 버튼 -->
+            <div class="d-flex justify-content-center mt-3">
+                <button class="btn btn-outline-primary" id="next-button">Next</button>
             </div>
         </div>
     </div>
 
     <img id="toggle-icon" src="./image/sun.png" alt="Toggle Dark Mode" />
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // 게임 데이터
+        const games = [
+            { title: "Game 1", genre: "Action", rating: 4, image: "./image/placeholder.png" },
+            { title: "Game 2", genre: "Adventure", rating: 3, image: "./image/placeholder.png" },
+            { title: "Game 3", genre: "RPG", rating: 5, image: "./image/placeholder.png" },
+            { title: "Game 4", genre: "Strategy", rating: 4, image: "./image/placeholder.png" },
+            { title: "Game 5", genre: "Puzzle", rating: 3, image: "./image/placeholder.png" },
+            { title: "Game 6", genre: "Simulation", rating: 4, image: "./image/placeholder.png" },
+            { title: "Game 7", genre: "Sports", rating: 3, image: "./image/placeholder.png" },
+            { title: "Game 8", genre: "Racing", rating: 4, image: "./image/placeholder.png" },
+            { title: "Game 9", genre: "Fighting", rating: 5, image: "./image/placeholder.png" },
+            { title: "Game 10", genre: "Horror", rating: 4, image: "./image/placeholder.png" },
+        ];
+
+        // 게임 카드 생성 함수
+        function createGameCard(game) {
+            return `
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="${game.image}" class="card-img-top" alt="${game.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${game.title}</h5>
+                            <p class="card-text">${game.genre}</p>
+                            <div class="game-rating">${'★'.repeat(game.rating)}${'☆'.repeat(5 - game.rating)}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 게임 목록 표시 함수
+        function displayGames(gamesToShow) {
+            const container = document.getElementById('more-games-container');
+            container.innerHTML = gamesToShow.map(createGameCard).join('');
+        }
+
+        // 초기 게임 목록 표시
+        displayGames(games);
+
+        // 검색 기능
         const searchButton = document.getElementById("search-button");
         const searchInput = document.getElementById("search-input");
-        const gameContainer = document.getElementById("game-container");
+        const gameContainer = document.querySelector(".game-container");
 
-        // 검색 버튼 클릭 시 검색 실행
+        function searchGame() {
+            const query = searchInput.value.trim().toLowerCase();
+
+            if (query) {
+                const filteredGames = games.filter(game =>
+                    game.title.toLowerCase().includes(query) ||
+                    game.genre.toLowerCase().includes(query)
+                );
+                displayGames(filteredGames);
+            } else {
+                displayGames(games);
+            }
+        }
+
         searchButton.addEventListener("click", searchGame);
-        // 엔터키로도 검색 가능
         searchInput.addEventListener("keyup", (event) => {
             if (event.key === "Enter") {
                 searchGame();
             }
-        });
-
-        function searchGame() {
-    const query = searchInput.value.trim().toLowerCase();
-    
-    if (query.includes("flypangpang") || query.includes("f")) {
-        gameContainer.style.display = "block"; // 검색 성공 시 게임 정보 표시
-
-        // 비디오 썸네일 표시, 썸네일 이미지 숨기기
-        flypangpangVideo.style.display = "none"; // 비디오 숨기기
-        gameImage.style.display = "none"; // 썸네일 이미지 숨기기
-        toggleIcon.style.display = "block"; // 다크모드 아이콘 표시
-    } else {
-        alert("검색 결과가 없습니다. 정확한 게임 이름을 입력해주세요.");
-        gameContainer.style.display = "none"; // 검색 실패 시 게임 정보 숨김
-
-        // 썸네일 이미지와 다크모드 아이콘 다시 표시
-        flypangpangVideo.style.display = "none"; // 비디오 숨기기
-        gameImage.style.display = "block"; // 썸네일 이미지 다시 표시
-        toggleIcon.style.display = "block"; // 다크모드 아이콘 다시 표시
-    }
-}
-
-
-
-        // 이미지에 마우스를 올렸을 때 비디오를 보여줌
-        const gameImage = document.getElementById("flypangpang");
-        const flypangpangVideo = document.getElementById("flypangpang-video");
-
-        gameImage.addEventListener("mouseenter", () => {
-            flypangpangVideo.style.display = "block";
-            flypangpangVideo.play();
-        });
-
-        gameImage.addEventListener("mouseleave", () => {
-            flypangpangVideo.style.display = "none";
-            flypangpangVideo.pause();
-            flypangpangVideo.currentTime = 0; // 비디오 재생 위치 초기화
         });
 
         // 다크모드 전환 함수
@@ -316,14 +391,24 @@
             isDarkMode = !isDarkMode;
             document.body.classList.toggle("dark-mode", isDarkMode);
             toggleIcon.src = isDarkMode ? "./image/moon.png" : "./image/sun.png";
-            toggleIcon.src = isDarkMode ? "./image/character.png" : "./image/sun.png";
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.style.color = isDarkMode ? '#fff' : '#333';
+            });
         }
 
         toggleIcon.addEventListener("click", toggleDarkMode);
+
         // 게임 제목 클릭 이벤트 처리
         const gameTitle = document.getElementById("game-title");
         gameTitle.addEventListener("click", () => {
             window.open("https://parkwonkuku.github.io/FlyPangPang/", '_blank', 'noopener,noreferrer');
+        });
+
+        const game2Title = document.getElementById("game2-title");
+        game2Title.addEventListener("click", () => {
+            window.open("https://github.com/ehdgus3130/KW_OSS_4TeamProject/tree/Web", '_blank', 'noopener,noreferrer');
         });
     </script>
 </body>
