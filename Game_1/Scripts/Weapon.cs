@@ -50,7 +50,6 @@ public class Weapon : MonoBehaviour
             {
                 StopCoroutine(buffCoroutine[index]);
                 float time = buffTime - bufferTimer[index];
-                Debug.Log(time);
                 wait = new WaitForSeconds(time);
                 buffCoroutine[index] = StartCoroutine(Buff(index, time));
             }
@@ -83,7 +82,7 @@ public class Weapon : MonoBehaviour
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            bufferTimer[type] = elapsedTime;  // 흘러간 시간 저장
+            bufferTimer[type] = elapsedTime;
             yield return null;
         }
         if (type == 0)
