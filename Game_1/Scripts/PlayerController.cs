@@ -45,9 +45,18 @@ public class PlayerController : MonoBehaviour
     }
     void move()
     {
-        input.x = Input.GetAxisRaw("Horizontal");
-        input.y = Input.GetAxisRaw("Vertical");
-    }
+        input = Vector2.zero;
+
+        if (Input.GetKey(KeyCode.W))
+            input.y = 1;
+        else if (Input.GetKey(KeyCode.S))
+            input.y = -1;
+
+        if (Input.GetKey(KeyCode.A))
+            input.x = -1;
+        else if (Input.GetKey(KeyCode.D))
+            input.x = 1;
+        }
     void skill()
     {
         if (Input.GetKeyDown(KeyCode.K) && cooldownTime >= coolTime)
@@ -93,6 +102,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.CompareTag("Enemy"))
         {
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit_P);
             hit = true;
             GameManager.instance.health -= 1;
 

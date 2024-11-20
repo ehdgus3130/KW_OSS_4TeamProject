@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public PlayerController player;
     public GameObject uiStart;
     public GameObject HUD;
+    public GameObject uiPause;
     public Result uiResult;
 
     WaitForSecondsRealtime wait;
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         wait = new WaitForSecondsRealtime(0.5f);
-        AudioManager.instance.PlayBgm(true);
+        WebGLInput.captureAllKeyboardInput = false;
     }
     void Update()
     {
@@ -38,6 +39,14 @@ public class GameManager : MonoBehaviour
             StartCoroutine(GameEndRoutine());
         }
         gameTime += Time.deltaTime;
+        if (HUD.gameObject.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGame();
+                uiPause.SetActive(true);
+            }
+        }
     }
     public void GameStart()
     {
@@ -46,6 +55,7 @@ public class GameManager : MonoBehaviour
         player.gameObject.SetActive(true);
         uiStart.gameObject.SetActive(false);
         HUD.gameObject.SetActive(true);
+        AudioManager.instance.PlayBgm(true);
         Time.timeScale = 1;
     }
     public void GameOver()
@@ -77,5 +87,22 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+    public void PauseGame()
+    {
+        if (isLive)
+        {
+            Time.timeScale = 0;
+            isLive = false;
+        }
+    }
+
+    public void ResumeGame()
+    {
+        if (!isLive)
+        {
+            Time.timeScale = 1;
+            isLive = true;
+        }
     }
 }
