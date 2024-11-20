@@ -1,16 +1,249 @@
-body { padding: 0; margin: 0 }
-#unity-container { position: absolute }
-#unity-container.unity-desktop { left: 50%; top: 50%; transform: translate(-50%, -50%) }
-#unity-container.unity-mobile { position: fixed; width: 100%; height: 100% }
-#unity-canvas { background: #231F20 }
-.unity-mobile #unity-canvas { width: 100%; height: 100% }
-#unity-loading-bar { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: none }
-#unity-logo { width: 154px; height: 130px; background: url('unity-logo-dark.png') no-repeat center }
-#unity-progress-bar-empty { width: 141px; height: 18px; margin-top: 10px; margin-left: 6.5px; background: url('progress-bar-empty-dark.png') no-repeat center }
-#unity-progress-bar-full { width: 0%; height: 18px; margin-top: 10px; background: url('progress-bar-full-dark.png') no-repeat center }
-#unity-footer { position: relative }
-.unity-mobile #unity-footer { display: none }
-#unity-webgl-logo { float:left; width: 204px; height: 38px; background: url('webgl-logo.png') no-repeat center }
-#unity-build-title { float: right; margin-right: 10px; line-height: 38px; font-family: arial; font-size: 18px }
-#unity-fullscreen-button { cursor:pointer; float: right; width: 38px; height: 38px; background: url('fullscreen-button.png') no-repeat center }
-#unity-warning { position: absolute; left: 50%; top: 5%; transform: translate(-50%); background: white; padding: 10px; display: none }
+body {
+    font-family: "Galmuri9", sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    overflow-y: auto;
+    background-color: white;
+    color: black;
+}
+
+body.dark-mode {
+    background-color: #222;
+    color: #ddd;
+}
+
+#web-title {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#web-title h1 {
+    font-weight: bold;
+}
+
+/* Unity 컨테이너 스타일 */
+#unity-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#unity-canvas {
+    border: 2px solid #555;
+    border-radius: 10px;
+    background-color: #000;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+}
+
+#unity-loading-bar {
+    width: 80%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#unity-progress-bar-empty {
+    width: 100%;
+    height: 10px;
+    background-color: #333;
+    border-radius: 5px;
+}
+
+#unity-progress-bar-full {
+    height: 100%;
+    background-color: #4caf50;
+    width: 0%;
+}
+
+#unity-warning {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 0.9em;
+}
+
+/* 댓글 섹션 스타일 */
+#comment-section {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+#comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#comment-input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #555;
+    background-color: transparent;
+    border-radius: 5px;
+    resize: none;
+    min-height: 80px;
+}
+
+#comment-button {
+    align-self: flex-end;
+    padding: 7px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    max-width: 90px;
+}
+
+#comment-list {
+    margin-top: 10px;
+}
+
+.comment {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-top: 1px solid #555;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+}
+
+#username-input {
+    max-width: 80px;
+    max-height: 50px;
+    margin-bottom: 1px;
+    border: 1px solid #555;
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 10px;
+    font-size: medium;
+    resize: none;
+}
+
+.delete-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    text-decoration: underline;
+}
+
+/* 게임 설명란 스타일 */
+#game-description-footer {
+    display: flex;
+    align-items: left;
+    justify-content: center;
+    width: 95%;
+    padding: 10px;
+}
+
+#game-description-title {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#game-description {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #555;
+    background-color: transparent;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+#game-description h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 10px;
+    margin: 0;
+}
+
+#game-description p {
+    padding-left: 20px;
+    margin: 0;
+}
+
+/* 페이지 하단 */
+#footer {
+    width: 90%;
+    max-width: 900px;
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #555;
+    font-size: 0.9em;
+}
+
+#footer p {
+    margin: 0;
+}
+
+/* 다크 모드에서 변경될 요소 스타일 */
+body.dark-mode #unity-canvas {
+    border-color: #888;
+}
+
+body.dark-mode #comment-input {
+    color: #ddd;
+}
+
+body.dark-mode #comment-button {
+    background-color: #007bff;
+    color: #ddd;
+}
+
+body.dark-mode #username-input {
+    color: #ddd;
+}
+
+body.dark-mode #game-description {
+    border-color: #888;
+}
+
+body.dark-mode #footer {
+    border-top-color: #555;
+}
+
+body.dark-mode .delete-btn {
+    color: #ddd;
+}
+
+#mode-toggle-button {
+    background-color: transparent;
+    position: relative;
+    color: gold;
+    border: none;
+    font-size: 0.8em;
+}
+
+.info_panel_wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+.more_information_toggle.open .info_panel_wrapper {
+    max-height: 500px;
+    /* 패널이 열렸을 때 최대 높이 설정 */
+}
