@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
         if (!GameManager.instance.isLive) return;
         
         cooldownTime += Time.deltaTime;
-        levelUp(); 
         move();
         skill();
     }
@@ -73,16 +72,6 @@ public class PlayerController : MonoBehaviour
             bullet.parent = transform;
 
             cooldownTime = 0f;
-        }
-    }
-    void levelUp()
-    {
-        if (GameManager.instance.exp >= 5 * (GameManager.instance.level + 1))
-        {
-            GameManager.instance.level++;
-            GameManager.instance.exp = 0;
-            weapon.Enforce(2, 0.05f);
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
         }
     }
     void FixedUpdate()
@@ -150,5 +139,9 @@ public class PlayerController : MonoBehaviour
         }
 
         cooldownImage[type].fillAmount = 0f;
+    }
+    public Weapon GetWeapon()
+    {
+        return weapon;
     }
 }

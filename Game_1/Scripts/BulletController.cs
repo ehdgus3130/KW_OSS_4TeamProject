@@ -22,7 +22,7 @@ public class BulletController : MonoBehaviour
     {
         if(!GameManager.instance.isLive) return;
 
-        if (rigid.position.x >= 10f)
+        if (rigid.position.x >= 15f)
         {
             if(gameObject.tag == "Skill")
             {
