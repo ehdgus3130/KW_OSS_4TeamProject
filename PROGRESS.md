@@ -22,7 +22,7 @@
 
 <img src="./ReadMeFile/Example2.png">
 
-<img src="">
+<img src="./ReadMeFile/Example3.png">
 
 <h2>Individual Progress Status</h2>
 <b>김동현</b>
