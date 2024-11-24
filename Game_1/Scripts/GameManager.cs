@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -23,22 +24,25 @@ public class GameManager : MonoBehaviour
     public GameObject HUD;
     public GameObject uiPause;
     public Result uiResult;
+    public Image expGauge;
 
     WaitForSecondsRealtime wait;
     void Awake()
     {
         instance = this;
         wait = new WaitForSecondsRealtime(0.5f);
+        expGauge.fillAmount = 0;
         WebGLInput.captureAllKeyboardInput = false;
     }
     void Update()
     {
         if (!isLive) return;
-        if(maxTime <= gameTime)
+        if (maxTime <= gameTime)
         {
             StartCoroutine(GameEndRoutine());
         }
         gameTime += Time.deltaTime;
+        levelUp();
         if (HUD.gameObject.activeSelf)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -46,6 +50,19 @@ public class GameManager : MonoBehaviour
                 PauseGame();
                 uiPause.SetActive(true);
             }
+        }
+    }
+    void levelUp()
+    {
+        int requiredExp = 5 * (level + 1);
+
+        expGauge.fillAmount = (float)exp / requiredExp;
+        if (exp >= requiredExp)
+        {
+            level++;
+            exp = 0;
+            player.GetWeapon().Enforce(2, 0.05f);
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
         }
     }
     public void GameStart()

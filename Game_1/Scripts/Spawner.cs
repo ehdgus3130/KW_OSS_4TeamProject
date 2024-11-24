@@ -35,21 +35,20 @@ public class Spawner : MonoBehaviour
     }
     void spawn()
     {
-        List<int> usedIndexes = new List<int>();
+        List<int> availableIndexes = new List<int>();
+        for (int i = 0; i < spawnPoint.Length; i++)
+        {
+            availableIndexes.Add(i);
+        }
 
         for (int i = 0; i < 4; i++)
         {
-            int randomIndex;
-
-            do
-            {
-                randomIndex = Random.Range(1, spawnPoint.Length);
-            } while (usedIndexes.Contains(randomIndex));
-
-            usedIndexes.Add(randomIndex);
+            int randomIndex = Random.Range(1, availableIndexes.Count);
+            int spawnIndex = availableIndexes[randomIndex];
+            availableIndexes.RemoveAt(randomIndex);
 
             GameObject enemy = GameManager.instance.pool.Get(0);
-            enemy.transform.position = spawnPoint[randomIndex].position;
+            enemy.transform.position = spawnPoint[spawnIndex].position;
             enemy.GetComponent<EnemyController>().Init(spawnDatas[level]);
         }
     }
