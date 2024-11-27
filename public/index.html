@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- 페이지 제목 -->
+    <title>팡팡랜드</title>
+
+    <!-- Bootstrap CSS 링크 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Section</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css">
+    <!-- 커스텀 스타일 -->
+    <style>
+        /* navbar-title 스타일 */
+        .navbar-title {
+            font-size: 50px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: -600px;
+            top: 10px;
+        }
+
+        /* 로고 스타일 */
+        .navbar-logo {
+            position: absolute;
+            top: -10px;
+            left: -700px;
+            width: 90px;
+            height: 120px;
+        }
+
+        .navbar-title {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 0;
+            /* 불필요한 여백 제거 */
+        }
+
+        .navbar-title span:nth-child(1) {
+            color: #569eff;
+        }
+
+        .navbar-title span:nth-child(2) {
+            color: #FF4F62;
+        }
+
+        .navbar-title span:nth-child(3) {
+            color: #49DB8A;
+        }
+
+        .navbar-title span:nth-child(4) {
+            color: #892A35;
+        }
+
+        /* 검색창 스타일 */
+        .search-container {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 검색창 입력 스타일 */
+        .search-input {
+            padding: 10px;
+            /* 패딩 증가 */
+            font-size: 18px;
+            /* 글씨 크기 증가 */
+            width: 500px;
+            /* 너비 증가 */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            margin-right: 5px;
+        }
+
+        /* 검색 버튼 스타일 */
+        .search-button {
+            padding: 10px 15px;
+            /* 패딩 증가 */
+            font-size: 18px;
+            /* 글씨 크기 증가 */
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #911741;
+            color: white;
+        }
+
+        /* 게임 리스트 컨테이너 */
+        .game-container {
+            margin-top: 150px;
+
+            font-weight: bold;
+        }
+
+        /* 게임 썸네일 스타일 */
+        .game-thumbnail {
+            position: relative;
+            left: 90px;
+            width: 450px;
+            height: 270px;
+            cursor: pointer;
+            border-radius: 15px;
+        }
+
+        /* 게임 제목 스타일 */
+        .game-title-text {
+            position: relative;
+            left: 90px;
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        /* 게임 장르 스타일*/
+        .game-genre-text {
+            position: relative;
+            left: 90px;
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+            cursor: pointer;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        /* 게임 별점 스타일*/
+        .game-rating {
+            position: relative;
+            left: 90px;
+            display: inline-block;
+            color: #FFD700;
+            font-size: 14px;
+        }
+
+        #toggle-icon {
+            cursor: pointer;
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            transition: transform 0.5s;
+        }
+
+        /* 다크모드 스타일 */
+        body.dark-mode {
+            background: #121212;
+            color: #ffffff;
+        }
+
+        body.dark-mode .game-title-text {
+            color: #ffffff;
+        }
+
+        body.dark-mode .game-genre-text {
+            color: #ffffff;
+        }
+
+        body.dark-mode .card-title,
+        body.dark-mode .card-text {
+            color: #ffffff
+        }
+
+        /* 장르 네비게이션 스타일 */
+        .genre-nav {
+            margin-top: 120px;
+        }
+
+        /* 네비게이션 링크 스타일 */
+        .nav-pills .nav-link {
+            color: #333;
+            border-radius: 20px;
+            padding: 8px 20px;
+            margin: 0 5px;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: #911741;
+            color: white;
+        }
+
+        /* 더 많은 게임 스타일 */
+        .more-games {
+            position: relative;
+
+            margin-top: 50px;
+        }
+
+        .more-games .card {
+            border: none;
+            background-color: transparent;
+            margin-bottom: 20px;
+            left: 50px;
+        }
+
+        .more-games .card-img-top {
+            border-radius: 15px;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* 페이지네이션 스타일 */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+        }
+
+        .pagination li {
+            cursor: pointer;
+        }
+
+        .pagination li a {
+            display: block;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .pagination li a.active {
+            background-color: #911741;
+            color: white;
+            border-color: #911741;
+        }
+
+        .pagination li a.disabled {
+            pointer-events: none;
+            color: #aaa;
+            border-color: #ddd;
+        }
+
+        /* 다크모드에서의 추가 스타일 */
+        body.dark-mode .nav-pills .nav-link {
+            color: #fff;
+        }
+
+        body.dark-mode .card {
+            background-color: #333;
+        }
+
+        body.dark-mode .pagination li a {
+            color: #fff;
+            border-color: #555;
+        }
+
+        body.dark-mode .pagination li a.active {
+            background-color: #911741;
+            border-color: #911741;
+        }
+
+        body.dark-mode .pagination li a.disabled {
+            color: #555;
+            border-color: #555;
+        }
+
+        /* 다크모드에서 댓글 텍스트와 입력창 스타일 */
+        body.dark-mode .comment-container {
+            background-color: #333;
+            /* 댓글 컨테이너 배경 색상 */
+            color: white;
+            /* 댓글 텍스트 색상 */
+        }
+
+        body.dark-mode .comment-box input[type="text"] {
+            background-color: #444;
+            /* 댓글 입력창 배경 색상 */
+            color: white;
+            /* 댓글 입력창 텍스트 색상 */
+            border: 1px solid #555;
+            /* 댓글 입력창 테두리 색상 */
+        }
+
+        body.dark-mode .comment-box button {
+            background-color: #911741;
+            /* 버튼 배경 색상 */
+            color: white;
+            /* 버튼 텍스트 색상 */
+        }
+
+        body.dark-mode .comment-box button:hover {
+            background-color: #0056b3;
+            /* 버튼 hover 상태 */
+        }
+
+        /* 폰트 및 부드러운 다크모드 화이트 모드 전환 */
+        body {
+            font-family: "Galmuri9", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow-y: auto;
+            background-color: white;
+            color: black;
+            transition: background-color 0.5s, color 0.5s;
+            /* 화면 모드 변경 시 부드럽게 전환 */
+        }
+
+        .comment-container {
+            width: 50%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        body.dark-mode h2 {
+            color: #ffffff
+        }
+
+        .comment-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+            font-size: 14px;
+        }
+
+        textarea:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        button {
+            align-self: flex-end;
+            background-color: #911741;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .comments-list {
+            margin-top: 20px;
+            padding: 10px 0;
+            border-top: 1px solid #ddd;
+        }
+
+        .comment {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css">
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav class="navbar bg-body-tertiary">
+        <div class="container">
+            <div class="logo-container">
+                <img src="./image/character1.png" alt="Character Image" class="navbar-logo" />
+                <div class="navbar-title">
+                    <span>팡</span>
+                    <span>팡</span>
+                    <span>랜</span>
+                    <span>드</span>
+                </div>
+            </div>
+
+            <!-- 검색창 추가 -->
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for a game" />
+                <button id="search-button" class="search-button">검색</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 장르 네비게이션 -->
+    <div class="genre-nav">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid justify-content-center">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active" href="#" data-genre="All">All</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-genre="Action">Action</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-genre="Adventure">Adventure</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-genre="Puzzle">Puzzle</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-genre="Sports">Sports</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-genre="Racing">Racing</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 오늘의 신작 게임 -->
+    <div class="container game-container">
+        <h2 class="text-center mb-4">신작 추천 게임!!</h2>
+        <div class="row" id="recommended-games">
+            <!-- 추천 게임은 서버에서 동적으로 로드됩니다 -->
+            <div class="col-md-6">
+                <a href="#" id="game-link" target="_blank" rel="noopener noreferrer">
+                    <img src="./image/flypangpang.png" id="flypangpang" class="game-thumbnail"
+                        alt="Fly Pang Pang Game" />
+                </a>
+                <div class="game-title-container mt-2">
+                    <p class="game-title-text" id="game-title">[슈팅 게임] Fly Pang Pang</p>
+                    <p class="game-genre-text" id="game-genre">아케이드</p>
+                    <div class="game-rating">★★★★☆</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <a href="#" id="game2-link" target="_blank" rel="noopener noreferrer">
+                    <img src="./image/jump.png" id="Run_and_jump" class="game-thumbnail" alt="Run and Jump Game" />
+                </a>
+                <div class="game-title-container mt-2">
+                    <p class="game-title-text" id="game2-title">[어드벤쳐] Pang Pang Run</p>
+                    <p class="game-genre-text" id="game2-genre">액션</p>
+                    <div class="game-rating">★☆☆☆☆</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 더 많은 게임 -->
+    <div class="more-games">
+        <div class="container">
+            <h2 class="text-center mb-4">더 많은 게임</h2>
+            <div class="row row-cols-2 row-cols-md-4 g-4" id="more-games-container">
+                <!-- 게임 썸네일은 JavaScript로 동적으로 추가됩니다 -->
+            </div>
+
+            <!-- 게임 추가 버튼 -->
+            <div id="add-game-container" class="mt-4 text-center">
+                <h3>게임 추가</h3>
+                <input id="new-game-title" type="text" placeholder="게임 제목">
+                <input id="new-game-genre" type="text" placeholder="장르">
+                <input id="new-game-rating" type="number" placeholder="평점 (1~5)" min="1" max="5">
+                <input id="new-game-image" type="text" placeholder="이미지 링크">
+                <button id="add-game-btn" class="btn btn-primary mt-2">게임 추가</button>
+            </div>
+
+            <!-- 페이지네이션 컨테이너 -->
+            <div class="pagination-container">
+                <ul class="pagination" id="pagination">
+                    <!-- 페이지네이션 버튼은 JavaScript로 동적으로 추가됩니다 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 댓글 섹션 -->
+    <div class="comment-container">
+        <h2>Comments</h2>
+        <div class="comment-box">
+            <input type="text" id="comment-input" placeholder="Write a comment...">
+            <button id="submit-btn">Submit</button>
+        </div>
+        <div class="comments-list" id="comments-list">
+            <!-- User comments will appear here -->
+        </div>
+    </div>
+
+    <!-- 다크모드 토글 아이콘 -->
+    <img id="toggle-icon" src="./image/sun.png" alt="Toggle Dark Mode" />
+
+    <!-- JavaScript 파일 -->
+    <script src="script.js"></script>
+
+    <!-- Bootstrap JS 링크 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>
