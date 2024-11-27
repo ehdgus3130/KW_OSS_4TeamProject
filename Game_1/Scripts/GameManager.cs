@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public GameObject uiStart;
     public GameObject HUD;
     public GameObject uiPause;
+    public GameObject uiHelp;
     public Result uiResult;
     public Image expGauge;
 
@@ -36,20 +37,52 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
+        if(uiStart.gameObject.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                GameStart();
+            }
+            else if(Input.GetKeyDown(KeyCode.H))
+            {
+                uiStart.gameObject.SetActive(false);
+                uiHelp.gameObject.SetActive(true);
+            }
+        }
+        else if(!uiStart.gameObject.activeSelf && uiHelp.gameObject.activeSelf)
+        {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                uiStart.gameObject.SetActive(true);
+                uiHelp.gameObject.SetActive(false);
+            }
+        }
+
+        if (uiPause.gameObject.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                GameRetry();
+            }
+            else if (Input.GetKeyDown(KeyCode.N))
+            {
+                ResumeGame();
+                uiPause.gameObject.SetActive(false);
+            }
+        }
+
         if (!isLive) return;
+
         if (maxTime <= gameTime)
         {
             StartCoroutine(GameEndRoutine());
         }
         gameTime += Time.deltaTime;
         levelUp();
-        if (HUD.gameObject.activeSelf)
+        if (HUD.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseGame();
-                uiPause.SetActive(true);
-            }
+            PauseGame();
+            uiPause.SetActive(true);
         }
     }
     void levelUp()
@@ -102,15 +135,15 @@ public class GameManager : MonoBehaviour
     }
     public void GameRetry()
     {
-        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
     public void PauseGame()
     {
         if (isLive)
         {
-            Time.timeScale = 0;
             isLive = false;
+            HUD.gameObject.SetActive(false);
+            Time.timeScale = 0;
         }
     }
 
@@ -118,8 +151,9 @@ public class GameManager : MonoBehaviour
     {
         if (!isLive)
         {
-            Time.timeScale = 1;
             isLive = true;
+            HUD.gameObject.SetActive(true);
+            Time.timeScale = 1;
         }
     }
 }
