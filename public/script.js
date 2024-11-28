@@ -13,6 +13,62 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('게임 데이터를 가져오는 중 오류 발생:', error);
         }
     }
+    window.addEventListener('scroll', function () {
+        var container = document.querySelector('.toggle-and-add-container');
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+        // 스크롤 양에 맞춰 top 값을 변경 (필요에 따라 값 조정)
+        container.style.top = (scrollTop * 1.3 + 20) + 'px';
+    });
+    document.getElementById('toggle-icon').addEventListener('mouseenter', function () {
+        var darkModeText = document.getElementById('darkModeText');
+
+        // 다크모드 상태에 따라 텍스트 업데이트
+        if (document.body.classList.contains('dark-mode')) {
+            darkModeText.textContent = 'WhiteMode';  // 다크모드일 때 "WhiteMode"
+        } else {
+            darkModeText.textContent = 'DarkMode';  // 다크모드가 아닐 때 "DarkMode"
+        }
+
+        // 마우스가 올라갔을 때 텍스트 표시
+        darkModeText.style.display = 'inline-block';
+    });
+
+    document.getElementById('toggle-icon').addEventListener('mouseleave', function () {
+        var darkModeText = document.getElementById('darkModeText');
+
+        // 마우스가 벗어났을 때 텍스트 숨기기
+        darkModeText.style.display = 'none';
+    });
+
+    document.getElementById('toggle-icon').addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode'); // 다크모드 토글
+
+        // 모드가 변경될 때마다 텍스트 업데이트
+        var darkModeText = document.getElementById('darkModeText');
+        if (document.body.classList.contains('dark-mode')) {
+            darkModeText.textContent = 'LightMode';  // 다크모드일 때 "WhiteMode"
+        } else {
+            darkModeText.textContent = 'DarkMode';  // 다크모드가 아닐 때 "DarkMode"
+        }
+    });
+
+    document.getElementById('add-game-btn').addEventListener('mouseenter', function () {
+        var addGameText = document.getElementById('add-game-text');
+        addGameText.style.display = 'inline-block';  // 마우스가 올라갔을 때 텍스트 표시
+        addGameText.style.opacity = 1;  // 텍스트가 부드럽게 나타나도록 opacity 조정
+    });
+
+    document.getElementById('add-game-btn').addEventListener('mouseleave', function () {
+        var addGameText = document.getElementById('add-game-text');
+        addGameText.style.opacity = 0;  // 텍스트가 부드럽게 사라지도록 opacity 조정
+        setTimeout(function () {
+            addGameText.style.display = 'none';  // 마우스가 벗어났을 때 텍스트 숨기기
+        }, 300); // 텍스트가 사라지는 애니메이션 끝난 후 숨김
+    });
+
+
+
 
     // 댓글 데이터 가져오기
     async function fetchComments() {
@@ -290,48 +346,59 @@ document.addEventListener('DOMContentLoaded', () => {
             addComment();
         }
     });
-
-    // "게임 추가" 버튼 클릭 이벤트 핸들러
+    /* 모달 창 */
+    // "게임 추가" 이미지 버튼 클릭 시 모달 창 열기
     document.getElementById("add-game-btn").addEventListener("click", function () {
+        openModal(); // 모달 창 열기
+    });
+
+    // 모달 창 열기 함수
+    function openModal() {
+        document.getElementById("game-add-modal").style.display = "block"; // 모달 보이기
+    }
+
+    // 모달 창 닫기 기능
+    document.getElementById("close-modal").addEventListener("click", function () {
+        document.getElementById("game-add-modal").style.display = "none"; // 모달 숨기기
+    });
+
+    document.getElementById("add-game").addEventListener("click", function () {
+        console.log('게임 추가 버튼이 클릭되었습니다.');  // 로그로 확인
+        addGame(); // 게임 추가 함수 호출
+    });
+
+
+
+    function addGame() {
         // 입력 필드에서 값 가져오기
         const title = document.getElementById("new-game-title").value.trim();
         const genre = document.getElementById("new-game-genre").value.trim();
-        const rating = document.getElementById("new-game-rating").value.trim();
+        const gamelink = document.getElementById("new-game-link").value.trim();
         const image = document.getElementById("new-game-image").value.trim();
-
+        // 게임 정보 출력 (예시로 콘솔에 출력)
+        console.log("게임 제목:", title);
+        console.log("게임 장르:", genre);
+        console.log("게임 평점:", gamelink);
+        console.log("게임 이미지 링크:", image);
         // 입력값 검증
-        if (!title || !genre || !rating || !image) {
-            alert("모든 항목을 채워주세요!");
+        if (!title || !genre || !gamelink || !image) {
+            alert("모든 항목을 올바르게 입력해주세요!");
             return;
         }
 
-        // 게임 컨테이너 선택
-        const container = document.getElementById("more-games-container");
-
-        // 새 게임 카드 생성
-        const gameCard = document.createElement("div");
-        gameCard.className = "col";
-        gameCard.innerHTML = `
-        <div class="card">
-            <img src="${image}" class="card-img-top" alt="${title}">
-            <div class="card-body">
-                <h5 class="card-title">${title}</h5>
-                <p class="card-text">${genre}</p>
-                <div class="game-rating">${"★".repeat(rating)}${"☆".repeat(5 - rating)}</div>
-            </div>
-        </div>
-    `;
-
-        // 새 게임 카드를 컨테이너에 추가
-        container.appendChild(gameCard);
+        // 모달 창 닫기
+        document.getElementById("game-add-modal").style.display = "none";
 
         // 입력 필드 초기화
         document.getElementById("new-game-title").value = "";
         document.getElementById("new-game-genre").value = "";
-        document.getElementById("new-game-rating").value = "";
+        document.getElementById("new-game-link").value = "";
         document.getElementById("new-game-image").value = "";
 
-        alert("당신의 게임이 추가되었습니다!");
-    });
+        alert("게임이 추가되었습니다!");
+    }
 
+
+
+    /*------------*/
 });
