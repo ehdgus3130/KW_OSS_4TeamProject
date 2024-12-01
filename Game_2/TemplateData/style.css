@@ -21,9 +21,32 @@ body.dark-mode {
     width: 100%;
     max-width: 900px;
     padding: 20px 0px;
+    font-weight: bold;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+#logo-and-title {
+    display: flex;
+    align-items: center;
+    /* 로고와 텍스트를 세로 정렬 */
+    gap: 10px;
+    /* 로고와 글자 사이의 간격 */
+}
+
+#logo-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#logo-button img {
+    width: 50px;
+    /* 로고 크기 */
+    height: 50px;
+    display: block;
 }
 
 #web-title h1 {
