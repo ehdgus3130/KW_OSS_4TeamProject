@@ -14,17 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 댓글 데이터 가져오기
-    async function fetchComments() {
-        try {
-            const response = await fetch('/api/comments');
-            const comments = await response.json();
-            displayComments(comments);
-        } catch (error) {
-            console.error('댓글 데이터를 가져오는 중 오류 발생:', error);
-        }
-    }
-
     // 게임 카드 생성 함수
     function createGameCard(game) {
         return `
@@ -50,6 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = gamesToShow.map(createGameCard).join('');
     }
 
+    // 댓글 데이터 가져오기
+    async function fetchComments() {
+        try {
+            const response = await fetch('/api/comments');
+            const comments = await response.json();
+            displayComments(comments);
+        } catch (error) {
+            console.error('댓글 데이터를 가져오는 중 오류 발생:', error);
+        }
+    }
+
     // 댓글 목록 표시 함수
     function displayComments(comments) {
         const commentsList = document.getElementById("comments-list");
@@ -59,74 +59,77 @@ document.addEventListener('DOMContentLoaded', () => {
             commentDiv.classList.add("comment");
             commentDiv.setAttribute("data-id", comment._id); // 댓글 ID 저장
             commentDiv.innerHTML = `
-                <p>${comment.content}</p>
-                <button class="delete-btn">삭제</button>
-            `;
+                    <p><strong>${comment.nickname}:</strong> ${comment.content}</p>
+                    <button class="delete-btn">삭제</button>
+                `;
             // 삭제 버튼 클릭 이벤트 리스너 추가
-            commentDiv.querySelector(".delete-btn").addEventListener("click", () => deleteComment(comment._id));
+            commentDiv.querySelector(".delete-btn").addEventListener("click", () => deleteComment(comment._id, comment.nickname));
             commentsList.appendChild(commentDiv);
         });
     }
 
-    // 댓글 삭제 함수
-    async function deleteComment(commentId) {
-        try {
-            const response = await fetch(`/api/comments/${commentId}`, {
-                method: 'DELETE',
-            });
-
-            if (response.ok) {
-                // 댓글 제거
-                const commentDiv = document.querySelector(`.comment[data-id='${commentId}']`);
-                if (commentDiv) {
-                    commentDiv.remove(); // DOM에서 댓글 삭제
-                }
-            } else {
-                console.error('댓글 삭제 실패:', await response.json());
-            }
-        } catch (error) {
-            console.error('댓글 삭제 중 오류 발생:', error);
-        }
-    }
-
-    // 댓글을 추가하는 함수 (서버에 POST 요청)
+    // 댓글 추가 함수
     async function addComment() {
-        const commentInput = document.getElementById("comment-input");
-        const newComment = commentInput.value.trim();
+        const nickname = document.getElementById("nickname-input").value.trim();
+        const commentInput = document.getElementById("comment-input").value.trim();
+        const password = document.getElementById("password-input").value.trim();
 
-        if (newComment) {
+        if (nickname && commentInput && password) {
             try {
                 const response = await fetch('/api/comments', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ content: newComment }),
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nickname, content: commentInput, password }),
                 });
 
                 if (response.ok) {
                     const comment = await response.json();
-                    // 댓글 목록에 새 댓글 추가
-                    const commentsList = document.getElementById("comments-list");
-                    const li = document.createElement("div");
-                    li.classList.add("comment");
-                    li.setAttribute("data-id", comment._id); // 댓글 ID 저장
-                    li.innerHTML = `
-                        <p>${comment.content}</p>
-                        <button class="delete-btn">삭제</button>
-                    `;
-                    // 삭제 버튼 클릭 이벤트 리스너 추가
-                    li.querySelector(".delete-btn").addEventListener("click", () => deleteComment(comment._id));
-                    commentsList.prepend(li); // 최신 댓글을 위에 추가
-                    commentInput.value = "";
+                    fetchComments(); // 새 댓글을 포함한 전체 댓글 목록을 갱신
+                    document.getElementById("nickname-input").value = "";
+                    document.getElementById("comment-input").value = "";
+                    document.getElementById("password-input").value = "";
                 } else {
                     console.error('댓글 추가 실패');
                 }
             } catch (error) {
                 console.error('댓글 추가 중 오류 발생:', error);
             }
+        } else {
+            alert('닉네임, 댓글, 암호를 모두 입력해주세요!');
         }
     }
+
+    // 댓글 삭제 함수
+    async function deleteComment(commentId, nickname) {
+        const password = prompt(`${nickname}님의 댓글을 삭제하려면 암호를 입력해주세요:`);
+
+        if (password) {
+            try {
+                const response = await fetch(`/api/comments/${commentId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password }),
+                });
+
+                if (response.ok) {
+                    fetchComments(); // 댓글 삭제 후 전체 댓글 목록을 갱신
+                } else {
+                    const errorData = await response.json();
+                    alert(errorData.message || '댓글 삭제 실패');
+                }
+            } catch (error) {
+                console.error('댓글 삭제 중 오류 발생:', error);
+            }
+        }
+    }
+
+    // 댓글 전송 이벤트 리스너
+    document.getElementById("submit-btn").addEventListener("click", addComment);
+    document.getElementById("comment-input").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            addComment();
+        }
+    });
 
     // 페이지네이션 설정
     function setupPagination() {
@@ -143,8 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         prevLi.appendChild(prevLink);
         pagination.appendChild(prevLi);
-
-
 
         prevLink.addEventListener('click', (e) => {
             e.preventDefault();
@@ -264,74 +265,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 다크모드 전환 함수
     const toggleIcon = document.getElementById("toggle-icon");
-    let isDarkMode = false;
-
-    function toggleDarkMode() {
-        isDarkMode = !isDarkMode;
-        document.body.classList.toggle("dark-mode", isDarkMode);
-        toggleIcon.src = isDarkMode ? "./image/moon.png" : "./image/sun.png";
-
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.style.color = isDarkMode ? '#fff' : '#333';
-        });
-    }
-
-    if (toggleIcon) {
-        toggleIcon.addEventListener("click", toggleDarkMode);
-    } else {
-        console.error('toggle-icon element not found');
-    }
-
-    // 댓글 전송 이벤트 리스너
-    document.getElementById("submit-btn").addEventListener("click", addComment);
-    document.getElementById("comment-input").addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            addComment();
-        }
+    toggleIcon.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
     });
 
-    // "게임 추가" 버튼 클릭 이벤트 핸들러
-    document.getElementById("add-game-btn").addEventListener("click", function () {
-        // 입력 필드에서 값 가져오기
-        const title = document.getElementById("new-game-title").value.trim();
-        const genre = document.getElementById("new-game-genre").value.trim();
-        const rating = document.getElementById("new-game-rating").value.trim();
-        const image = document.getElementById("new-game-image").value.trim();
-
-        // 입력값 검증
-        if (!title || !genre || !rating || !image) {
-            alert("모든 항목을 채워주세요!");
-            return;
-        }
-
-        // 게임 컨테이너 선택
-        const container = document.getElementById("more-games-container");
-
-        // 새 게임 카드 생성
-        const gameCard = document.createElement("div");
-        gameCard.className = "col";
-        gameCard.innerHTML = `
-        <div class="card">
-            <img src="${image}" class="card-img-top" alt="${title}">
-            <div class="card-body">
-                <h5 class="card-title">${title}</h5>
-                <p class="card-text">${genre}</p>
-                <div class="game-rating">${"★".repeat(rating)}${"☆".repeat(5 - rating)}</div>
-            </div>
-        </div>
-    `;
-
-        // 새 게임 카드를 컨테이너에 추가
-        container.appendChild(gameCard);
-
-        // 입력 필드 초기화
-        document.getElementById("new-game-title").value = "";
-        document.getElementById("new-game-genre").value = "";
-        document.getElementById("new-game-rating").value = "";
-        document.getElementById("new-game-image").value = "";
-
-        alert("당신의 게임이 추가되었습니다!");
-    });
-
+    // 위로 스크롤 기능
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 });
