@@ -170,7 +170,7 @@
             right: 20px;
             /* 오른쪽에서 20px 떨어지게 */
             margin-top: 20px;
-            width: 120px;
+            width: 105px;
             /* 세로로 배치되므로 폭을 좁게 설정 */
             padding: 10px;
             border: 2px solid #ddd;
@@ -312,7 +312,7 @@
 
         .nav-pills .nav-link.active {
             background-color: #911741;
-            color: white;
+            color: white !important;
         }
 
 
@@ -359,6 +359,12 @@
         body.dark-mode .nav-pills .nav-link {
             color: #fff;
         }
+
+        body.dark-mode .nav-pills .nav-link.active {
+            color: #333 !important;
+            /* 다크 모드에서 활성화된 링크 글자색 */
+        }
+
 
         body.dark-mode .card {
             background-color: #333;
@@ -564,11 +570,27 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        .cloud {
+            position: absolute;
+            z-index: 9999;
+            top: 80px;
+            right: 60px;
+            width: 150px;
+            height: 100px;
+            opacity: 0;
+            /* 기본적으로 숨김 처리 */
+            transition: opacity 0.3s;
+            /* 부드러운 전환 효과 */
+        }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css">
 </head>
 
 <body>
+    <div class="cloud-container">
+        <img src="./image/cloud.png" alt="cloud Image" class="cloud" />
+    </div>
     <!-- navbar -->
     <nav class="navbar bg-body-tertiary">
         <div class="navbar-title">
@@ -646,6 +668,8 @@
     <div class="comment-container">
         <h2>Comments</h2>
         <div class="comment-box">
+            <input type="text" id="nickname-input" placeholder="Enter your nickname...">
+            <input type="password" id="password-input" placeholder="Enter your password...">
             <input type="text" id="comment-input" placeholder="Write a comment...">
             <button id="submit-btn">Submit</button>
         </div>
@@ -653,6 +677,7 @@
             <!-- User comments will appear here -->
         </div>
     </div>
+
 
     <div class="toggle-and-add-container">
         <img id="toggle-icon" src="./image/sun.png" alt="Toggle Dark Mode" />
