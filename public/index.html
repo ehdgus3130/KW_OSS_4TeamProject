@@ -78,16 +78,19 @@
 
         /* 검색 버튼 스타일 */
         .search-button {
-            padding: 10px 30px;
+            padding: 10px 20px;
             /* 패딩 증가 */
             font-size: 18px;
             /* 글씨 크기 증가 */
 
+            /*검색 글자*/
             border: none;
             border-radius: 5px;
             background-color: #911741;
             color: white;
-            /*검색 글자*/
+            white-space: nowrap;
+            /* 텍스트 줄바꿈 방지 */
+
         }
 
         /* 게임 리스트 컨테이너 */
@@ -276,6 +279,48 @@
         .add-game-container input[type="text"],
         .add-game-container input[type="number"] {
             width: 150px;
+        }
+
+        /* 카드 이미지 크기와 간격 조정 */
+        .card {
+            max-width: 250px;
+            /* 카드 너비 제한 */
+            margin: 0 auto;
+            /* 카드 가운데 정렬 */
+            border: 1px solid #ddd;
+            /* 카드 테두리 */
+            border-radius: 10px;
+            /* 모서리 둥글게 */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            /* 그림자 추가 */
+            transition: transform 0.2s ease-in-out;
+            /* 호버 효과 */
+        }
+
+        /* 카드 이미지 크기 조정 */
+        .card-img-top {
+            width: 100%;
+            /* 이미지가 카드 너비에 맞게 조정 */
+            height: 150px;
+            /* 이미지 고정 높이 */
+            object-fit: cover;
+            /* 이미지 비율 유지 */
+        }
+
+        /* 카드 호버 시 확대 효과 */
+        .card:hover {
+            transform: scale(1.05);
+            /* 살짝 확대 */
+        }
+
+        /* 링크 영역 전체를 클릭 가능하게 */
+        .stretched-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 1;
         }
 
         /* 다크모드 스타일 */
@@ -574,8 +619,8 @@
         .cloud {
             position: absolute;
             z-index: 9999;
-            top: 80px;
-            right: 60px;
+            top: 85px;
+            right: 80px;
             width: 150px;
             height: 100px;
             opacity: 0;
@@ -696,18 +741,21 @@
             <input id="new-game-title" type="text" placeholder="게임 제목">
 
             <select id="new-game-genre">
-                <option value="action">액션</option>
-                <option value="adventure">어드벤처</option>
-                <option value="rpg">롤플레잉</option>
-                <option value="strategy">전략</option>
-                <option value="puzzle">퍼즐</option>
+                <option value="Action">액션</option>
+                <option value="Adventure">어드벤처</option>
+                <option value="Sports">스포츠</option>
+                <option value="Racing">레이싱</option>
+                <option value="Puzzle">퍼즐</option>
             </select>
 
             <input id="new-game-link" type="text" placeholder="링크">
-            <input id="new-game-image" type="text" placeholder="썸네일">
+
+            <!-- 파일 업로드 필드 -->
+            <input id="new-game-image" type="file" accept="image/*">
             <button id="add-game" class="btn btn-primary mt-2">게임 추가</button>
         </div>
     </div>
+
 
     <script src="script.js"></script>
 

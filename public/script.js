@@ -365,63 +365,90 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('게임 추가 버튼이 클릭되었습니다.');  // 로그로 확인
         addGame(); // 게임 추가 함수 호출
     });
-
-
-
     function addGame() {
-        // 입력 필드에서 값 가져오기
         const title = document.getElementById("new-game-title").value.trim();
         const genre = document.getElementById("new-game-genre").value.trim();
         const gamelink = document.getElementById("new-game-link").value.trim();
-        const image = document.getElementById("new-game-image").value.trim();
-        // 게임 정보 출력 (예시로 콘솔에 출력)
-        console.log("게임 제목:", title);
-        console.log("게임 장르:", genre);
-        console.log("게임 평점:", gamelink);
-        console.log("게임 이미지 링크:", image);
-        // 입력값 검증
-        if (!title || !genre || !gamelink || !image) {
+        const imageInput = document.getElementById("new-game-image");
+        const imageFile = imageInput.files[0];
+
+        if (!title || !genre || !gamelink || !imageFile) {
             alert("모든 항목을 올바르게 입력해주세요!");
             return;
         }
 
-        // 모달 창 닫기
-        document.getElementById("game-add-modal").style.display = "none";
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const imageURL = e.target.result;
+
+            // 새로운 게임 카드 생성
+            const newGameCard = document.createElement("div");
+            newGameCard.className = "col";
+            newGameCard.setAttribute("data-genre", genre); // 장르 정보 추가
+            newGameCard.innerHTML = `
+                <a href="${gamelink}" target="_blank" style="text-decoration: none; color: inherit;">
+                    <div class="card h-100">
+                        <img src="${imageURL}" class="card-img-top" alt="${title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${title}</h5>
+                            <p class="card-text">${genre}</p>
+                        </div>
+                    </div>
+                </a>
+            `;
+
+            // #more-games-container에 추가
+            const moreGamesContainer = document.getElementById("more-games-container");
+            moreGamesContainer.appendChild(newGameCard);
+
+            alert("게임이 추가되었습니다!");
+        };
+
+        reader.readAsDataURL(imageFile);
 
         // 입력 필드 초기화
         document.getElementById("new-game-title").value = "";
         document.getElementById("new-game-genre").value = "";
         document.getElementById("new-game-link").value = "";
-        document.getElementById("new-game-image").value = "";
-
-        alert("게임이 추가되었습니다!");
+        imageInput.value = "";
     }
 
 
 
-    // 게임 카드 생성 함수
-    function createGameCard(game) {
-        return `
-            <div class="col">
-                <div class="card h-100">
-                    <img src="${game.image}" class="card-img-top" alt="${game.title}">
-                    <div class="card-body">
-                        <h5 class="card-title">${game.title}</h5>
-                        <p class="card-text">${game.genre}</p>
-                        <div class="game-rating">${'★'.repeat(game.rating)}${'☆'.repeat(5 - game.rating)}</div>
-                    </div>
-                </div>
-            </div>
-        `;
+    // 장르 필터링 함수
+    function filterGamesByGenre(selectedGenre) {
+        const gameCards = document.querySelectorAll("#more-games-container .col");
+
+        gameCards.forEach(card => {
+            const cardGenre = card.getAttribute("data-genre");
+
+            // 선택된 장르와 카드의 장르 비교
+            if (selectedGenre === "All" || cardGenre === selectedGenre) {
+                card.style.display = "block"; // 카드 표시
+            } else {
+                card.style.display = "none"; // 카드 숨기기
+            }
+        });
     }
 
-    // 게임 목록 표시 함수
-    function displayGames() {
-        const container = document.getElementById('more-games-container');
-        const startIndex = (currentPage - 1) * gamesPerPage;
-        const endIndex = startIndex + gamesPerPage;
-        const gamesToShow = allGames.slice(startIndex, endIndex);
-        container.innerHTML = gamesToShow.map(createGameCard).join('');
-    }
+    // 장르 네비게이션 클릭 이벤트
+    document.querySelectorAll(".genre-nav .nav-link").forEach(navLink => {
+        navLink.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            // 모든 네비게이션에서 active 클래스 제거
+            document.querySelectorAll(".genre-nav .nav-link").forEach(link => link.classList.remove("active"));
+
+            // 현재 클릭된 네비게이션에 active 클래스 추가
+            this.classList.add("active");
+
+            // 선택된 장르로 필터링
+            const selectedGenre = this.getAttribute("data-genre");
+            filterGamesByGenre(selectedGenre);
+        });
+    });
+
+
+
 
 });
