@@ -323,6 +323,82 @@
             z-index: 1;
         }
 
+        /* 카드 이미지 컨테이너 */
+        .card-img-container {
+            position: relative;
+        }
+
+        /* 이미지 링크 설정 */
+        .card-img-container a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            /* 이미지 위에 클릭 가능한 링크 */
+        }
+
+        /* 좋아요 버튼 */
+        .card-footer {
+            position: relative;
+            padding: 10px;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            border-top: 1px solid #ddd;
+            z-index: 2;
+            /* 좋아요 버튼은 링크 위 */
+        }
+
+        .dark-mode .card-footer {
+            background-color: #333;
+        }
+
+        /* 첫 번째 게임 좋아요 버튼 위치 */
+        .first-game-like {
+            position: relative;
+            left: 65px;
+        }
+
+        /* 두 번째 게임 좋아요 버튼 위치 */
+        .second-game-like {
+            position: relative;
+            left: 63px;
+        }
+
+
+        .like-button {
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #ff4757;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .like-button:hover {
+            color: #ff4757;
+        }
+
+        .heart-icon {
+            font-size: 20px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .like-button:hover .heart-icon {
+            transform: scale(1.2);
+        }
+
+        .like-count {
+            font-size: 16px;
+        }
+
+
         /* 다크모드 스타일 */
         body.dark-mode {
             background: #121212;
@@ -438,7 +514,8 @@
             /* 댓글 텍스트 색상 */
         }
 
-        body.dark-mode .comment-box input[type="text"] {
+        body.dark-mode .comment-box input[type="text"],
+        body.dark-mode .comment-box input[type="password"] {
             background-color: #444;
             /* 댓글 입력창 배경 색상 */
             color: white;
@@ -534,11 +611,11 @@
         }
 
         .more-games {
-            margin-top: 10px;
+            /* 위치 설정 */
+            margin-top: 20px;
             width: 1000px;
             position: relative;
             top: 0;
-            /* 위치 설정 */
         }
 
         .comment-container {
@@ -675,6 +752,7 @@
     <div class="container game-container">
         <h2 class="text-center mb-4">신작 추천 게임!!</h2>
         <div class="row" id="recommended-games">
+            <!-- 첫 번째 게임 -->
             <div class="col-md-6">
                 <a href="#" id="game-link" target="_blank" rel="noopener noreferrer">
                     <img src="./image/flypangpang.png" id="flypangpang" class="game-thumbnail"
@@ -683,9 +761,16 @@
                 <div class="game-title-container mt-2">
                     <p class="game-title-text" id="game-title">[슈팅 게임] Fly Pang Pang</p>
                     <p class="game-genre-text" id="game-genre">아케이드</p>
-                    <div class="game-rating">★★★★☆</div>
+                </div>
+                <div class="like-container first-game-like">
+                    <button class="like-button" data-likes="0">
+                        <i class="heart-icon">&#9825;</i>
+                        <span class="like-count">0</span>
+                    </button>
                 </div>
             </div>
+
+            <!-- 두 번째 게임 -->
             <div class="col-md-6">
                 <a href="#" id="game2-link" target="_blank" rel="noopener noreferrer">
                     <img src="./image/jump.png" id="Run_and_jump" class="game-thumbnail" alt="Run and Jump Game" />
@@ -693,9 +778,15 @@
                 <div class="game-title-container mt-2">
                     <p class="game-title-text" id="game2-title">[어드벤쳐] Pang Pang Run</p>
                     <p class="game-genre-text" id="game2-genre">액션</p>
-                    <div class="game-rating">★☆☆☆☆</div>
+                </div>
+                <div class="like-container second-game-like">
+                    <button class="like-button" data-likes="0">
+                        <i class="heart-icon">&#9825;</i>
+                        <span class="like-count">0</span>
+                    </button>
                 </div>
             </div>
+
         </div>
     </div>
 

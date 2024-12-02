@@ -285,37 +285,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // 검색 기능
     const searchButton = document.getElementById("search-button");
     const searchInput = document.getElementById("search-input");
+    // 검색 기능
+    function searchGames() {
+        const searchInput = document.getElementById("search-input").value.toLowerCase().trim(); // 입력된 검색어
 
-    async function searchGame() {
-        const query = searchInput.value.trim().toLowerCase();
+        // 검색어가 비어 있으면 경고 메시지 표시
+        if (!searchInput) {
+            alert("검색어를 입력해주세요!");
+            return;
+        }
 
-        try {
-            if (query === "") {
-                // 검색어가 없으면 전체 게임 표시
-                allGames = [];
-                const response = await fetch('/api/games');
-                const games = await response.json();
-                allGames = games;
+        const gameCards = document.querySelectorAll("#more-games-container .col"); // 모든 게임 카드
+        let hasResults = false; // 검색 결과 여부
+
+        gameCards.forEach((card) => {
+            const title = card.querySelector(".card-title").textContent.toLowerCase();
+            const genre = card.querySelector(".card-text").textContent.toLowerCase();
+
+            // 검색어와 제목 또는 장르가 일치하면 표시, 아니면 숨김
+            if (title.includes(searchInput) || genre.includes(searchInput)) {
+                card.style.display = "block";
+                hasResults = true;
             } else {
-                const response = await fetch(`/api/games/search?q=${encodeURIComponent(query)}`);
-                const games = await response.json();
-                allGames = games;
+                card.style.display = "none";
             }
-            totalPages = Math.ceil(allGames.length / gamesPerPage);
-            currentPage = 1;
-            displayGames();
-            setupPagination();
-        } catch (error) {
-            console.error('검색 중 오류 발생:', error);
+        });
+
+        if (!hasResults) {
+            alert("검색 결과가 없습니다!");
+            return;
         }
     }
 
-    searchButton.addEventListener("click", searchGame);
-    searchInput.addEventListener("keyup", (event) => {
+    // 검색 버튼 클릭 이벤트
+    document.getElementById("search-button").addEventListener("click", searchGames);
+
+    // 검색창에서 Enter 키를 눌렀을 때도 검색 실행
+    document.getElementById("search-input").addEventListener("keyup", (event) => {
         if (event.key === "Enter") {
-            searchGame();
+            searchGames();
         }
     });
+
+
 
     // 다크모드 전환 함수
     const toggleIcon = document.getElementById("toggle-icon");
@@ -365,6 +377,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('게임 추가 버튼이 클릭되었습니다.');  // 로그로 확인
         addGame(); // 게임 추가 함수 호출
     });
+
+
     function addGame() {
         const title = document.getElementById("new-game-title").value.trim();
         const genre = document.getElementById("new-game-genre").value.trim();
@@ -383,25 +397,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 새로운 게임 카드 생성
             const newGameCard = document.createElement("div");
-            newGameCard.className = "col";
+            newGameCard.className = "col"; // Bootstrap 그리드 클래스
             newGameCard.setAttribute("data-genre", genre); // 장르 정보 추가
             newGameCard.innerHTML = `
-                <a href="${gamelink}" target="_blank" style="text-decoration: none; color: inherit;">
-                    <div class="card h-100">
+                <div class="card h-100">
+                    <div class="card-img-container">
+                        <a href="${gamelink}" target="_blank" class="stretched-link"></a>
                         <img src="${imageURL}" class="card-img-top" alt="${title}">
-                        <div class="card-body">
-                            <h5 class="card-title">${title}</h5>
-                            <p class="card-text">${genre}</p>
-                        </div>
                     </div>
-                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">${title}</h5>
+                        <p class="card-text">${genre}</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="like-button" data-likes="0">
+                            <i class="heart-icon">&#9825;</i> 
+                            <span class="like-count">0</span>
+                        </button>
+                    </div>
+                </div>
             `;
 
             // #more-games-container에 추가
             const moreGamesContainer = document.getElementById("more-games-container");
             moreGamesContainer.appendChild(newGameCard);
-
-            alert("게임이 추가되었습니다!");
         };
 
         reader.readAsDataURL(imageFile);
@@ -412,6 +431,28 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("new-game-link").value = "";
         imageInput.value = "";
     }
+
+    // 좋아요 기능
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("like-button") || e.target.closest(".like-button")) {
+            const button = e.target.closest(".like-button");
+            const likeCountSpan = button.querySelector(".like-count");
+            const heartIcon = button.querySelector(".heart-icon");
+            let likes = parseInt(button.getAttribute("data-likes"));
+
+            if (heartIcon.textContent === "♡") {
+                heartIcon.textContent = "♥";
+                likes++;
+            } else {
+                heartIcon.textContent = "♡";
+                likes--;
+            }
+
+            button.setAttribute("data-likes", likes);
+            likeCountSpan.textContent = likes;
+        }
+    });
+
 
 
 
