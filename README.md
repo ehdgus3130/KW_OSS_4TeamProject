@@ -95,7 +95,7 @@
     - 최종 점검
 <br />
 
-https://www.notion.so/13d709db824d80158438ce8f2180ed39
+[https://www.notion.so/13d709db824d80158438ce8f2180ed39](https://www.notion.so/13d709db824d80158438ce8f2180ed39)
 
 ## 💁‍♂️ 프로젝트 팀원
 - [김동현 2020202023](https://github.com/ehdgus3130)
