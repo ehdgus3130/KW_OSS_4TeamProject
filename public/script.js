@@ -491,5 +491,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+    // 이미지와 비디오, 컨테이너 엘리먼트 가져오기
+    const mediaContainer = document.querySelector('.media-container');
+    const gameThumbnail = document.getElementById('flypangpang');
+    const gameplayVideo = document.getElementById('gameplay-video');
+
+    // 마우스가 이미지 위로 올라갔을 때 비디오 재생
+    mediaContainer.addEventListener('mouseenter', () => {
+        gameplayVideo.style.display = 'block'; // 비디오 표시
+        gameplayVideo.play(); // 비디오 재생
+    });
+
+    // 마우스가 이미지에서 벗어났을 때 비디오 숨기고 멈춤
+    mediaContainer.addEventListener('mouseleave', () => {
+        gameplayVideo.style.display = 'none'; // 비디오 숨기기
+        gameplayVideo.pause(); // 비디오 일시 정지
+        gameplayVideo.currentTime = 0; // 비디오 재시작 위치 초기화
+    });
 
 });

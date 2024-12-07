@@ -40,6 +40,13 @@
             color: #892A35;
         }
 
+        .game-container {
+            border: 2px solid #aaa;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
         /* 로고 스타일 */
         .navbar-logo {
             position: absolute;
@@ -93,12 +100,6 @@
 
         }
 
-        /* 게임 리스트 컨테이너 */
-        .game-container {
-            margin-top: 30px;
-
-            font-weight: bold;
-        }
 
         /*추가함*/
         .game-container,
@@ -127,6 +128,28 @@
             border-radius: 15px;
         }
 
+        /* 숨겨진 비디오 스타일 */
+        #gameplay-video {
+            display: none;
+            /* 기본적으로 숨김 */
+            position: absolute;
+            /* 부모 요소의 위치 기준 */
+            top: 0;
+            /* 상단 정렬 */
+            left: 90px;
+            /* 왼쪽 정렬 */
+            width: 450px;
+            /* 비디오 너비 */
+            height: 230px;
+            /* 비디오 높이 */
+            border-radius: 15px;
+            /* 비디오 모서리 둥글게 */
+            object-fit: cover;
+            /* 비디오 화면을 썸네일 크기에 맞춤 */
+            z-index: 2;
+            /* 썸네일 위에 표시 */
+        }
+
         /* 게임 제목 스타일 */
         .game-title-text {
             position: relative;
@@ -148,15 +171,6 @@
             cursor: pointer;
             display: inline-block;
             margin-right: 10px;
-        }
-
-        /* 게임 별점 스타일*/
-        .game-rating {
-            position: relative;
-            left: 90px;
-            display: inline-block;
-            color: #FFD700;
-            font-size: 14px;
         }
 
 
@@ -477,14 +491,10 @@
         }
 
         /* 다크모드에서의 추가 스타일 */
-        body.dark-mode .nav-pills .nav-link {
-            color: #fff;
+        body.dark-mode .nav-pills .nav-link.active {
+            color: white !important;
         }
 
-        body.dark-mode .nav-pills .nav-link.active {
-            color: #333 !important;
-            /* 다크 모드에서 활성화된 링크 글자색 */
-        }
 
 
         body.dark-mode .card {
@@ -512,6 +522,7 @@
             /* 댓글 컨테이너 배경 색상 */
             color: white;
             /* 댓글 텍스트 색상 */
+            border: 5px solid white;
         }
 
         body.dark-mode .comment-box input[type="text"],
@@ -562,7 +573,9 @@
             background-color: white;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+
         }
+
 
         h2 {
             margin-bottom: 20px;
@@ -629,6 +642,9 @@
             /* 최대 높이 설정 (필요시 조정) */
             overflow-y: auto;
             /* 스크롤 추가 */
+
+            border: 5px solid #814242;
+            border-radius: 10px;
         }
 
 
@@ -754,9 +770,19 @@
         <div class="row" id="recommended-games">
             <!-- 첫 번째 게임 -->
             <div class="col-md-6">
-                <a href="#" id="game-link" target="_blank" rel="noopener noreferrer">
-                    <img src="./image/flypangpang.png" id="flypangpang" class="game-thumbnail"
-                        alt="Fly Pang Pang Game" />
+                <a href="https://parkwonkuku.github.io/OSS-4_teamproject/" id="game-link" target="_blank"
+                    rel="noopener noreferrer">
+                    <!-- 이미지와 비디오 컨테이너 -->
+                    <div class="media-container" style="position: relative;">
+                        <img src="./image/flypangpang.png" id="flypangpang" class="game-thumbnail"
+                            alt="Fly Pang Pang Game" />
+                        <!-- 숨겨진 비디오 -->
+                        <video id="gameplay-video" muted loop>
+                            <source src="./video/GamePlay1.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+
+                    </div>
                 </a>
                 <div class="game-title-container mt-2">
                     <p class="game-title-text" id="game-title">[슈팅 게임] Fly Pang Pang</p>
@@ -770,9 +796,11 @@
                 </div>
             </div>
 
+
             <!-- 두 번째 게임 -->
             <div class="col-md-6">
-                <a href="#" id="game2-link" target="_blank" rel="noopener noreferrer">
+                <a href="https://ehdgus3130.github.io/Run-Jump/" id="game2-link" target="_blank"
+                    rel="noopener noreferrer">
                     <img src="./image/jump.png" id="Run_and_jump" class="game-thumbnail" alt="Run and Jump Game" />
                 </a>
                 <div class="game-title-container mt-2">
