@@ -107,6 +107,4 @@ https://www.notion.so/13d709db824d80158438ce8f2180ed39
 - [백민재 2020202087](https://github.com/akswo)
     - 메인 페이지 제작
 - [정승수 2020202063](https://github.com/Chungss84)
-    - 메인 페이지 제작
-
-- 공통 작업 : 서버 구축
+    - 메인 페이지 제작, Database를 이용한 서버 구축
