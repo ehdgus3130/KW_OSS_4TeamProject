@@ -129,7 +129,29 @@
         }
 
         /* 숨겨진 비디오 스타일 */
-        #gameplay-video {
+        #gameplay-video1 {
+            display: none;
+            /* 기본적으로 숨김 */
+            position: absolute;
+            /* 부모 요소의 위치 기준 */
+            top: 0;
+            /* 상단 정렬 */
+            left: 90px;
+            /* 왼쪽 정렬 */
+            width: 450px;
+            /* 비디오 너비 */
+            height: 230px;
+            /* 비디오 높이 */
+            border-radius: 15px;
+            /* 비디오 모서리 둥글게 */
+            object-fit: cover;
+            /* 비디오 화면을 썸네일 크기에 맞춤 */
+            z-index: 2;
+            /* 썸네일 위에 표시 */
+        }
+
+        /* 숨겨진 비디오 스타일 (두 번째 게임) */
+        #gameplay-video2 {
             display: none;
             /* 기본적으로 숨김 */
             position: absolute;
@@ -777,7 +799,7 @@
                         <img src="./image/flypangpang.png" id="flypangpang" class="game-thumbnail"
                             alt="Fly Pang Pang Game" />
                         <!-- 숨겨진 비디오 -->
-                        <video id="gameplay-video" muted loop>
+                        <video id="gameplay-video1" muted loop>
                             <source src="./video/GamePlay1.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
@@ -801,11 +823,19 @@
             <div class="col-md-6">
                 <a href="https://ehdgus3130.github.io/Run-Jump/" id="game2-link" target="_blank"
                     rel="noopener noreferrer">
-                    <img src="./image/jump.png" id="Run_and_jump" class="game-thumbnail" alt="Run and Jump Game" />
+                    <!-- 이미지와 비디오 컨테이너 -->
+                    <div class="media-container" style="position: relative;">
+                        <img src="./image/jump.png" id="Run_and_jump" class="game-thumbnail" alt="Run and Jump Game" />
+                        <!-- 숨겨진 비디오 -->
+                        <video id="gameplay-video2" muted loop>
+                            <source src="./video/GamePlay2.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
                 </a>
                 <div class="game-title-container mt-2">
                     <p class="game-title-text" id="game2-title">[어드벤쳐] Pang Pang Run</p>
-                    <p class="game-genre-text" id="game2-genre">액션</p>
+                    <p class="game-genre-text" id="game2-genre">레이싱</p>
                 </div>
                 <div class="like-container second-game-like">
                     <button class="like-button" data-likes="0">
@@ -814,8 +844,9 @@
                     </button>
                 </div>
             </div>
-
         </div>
+    </div>
+    </div>
     </div>
 
     <!-- 더 많은 게임 -->

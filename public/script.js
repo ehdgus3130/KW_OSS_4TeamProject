@@ -490,23 +490,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    // 첫 번째 게임 - 이미지와 비디오, 컨테이너 엘리먼트 가져오기
+    const mediaContainer1 = document.querySelector('.col-md-6:nth-child(1) .media-container');
+    const gameplayVideo1 = document.getElementById('gameplay-video1');
 
-    // 이미지와 비디오, 컨테이너 엘리먼트 가져오기
-    const mediaContainer = document.querySelector('.media-container');
-    const gameThumbnail = document.getElementById('flypangpang');
-    const gameplayVideo = document.getElementById('gameplay-video');
-
-    // 마우스가 이미지 위로 올라갔을 때 비디오 재생
-    mediaContainer.addEventListener('mouseenter', () => {
-        gameplayVideo.style.display = 'block'; // 비디오 표시
-        gameplayVideo.play(); // 비디오 재생
+    // 첫 번째 게임 - 마우스 이벤트 처리
+    mediaContainer1.addEventListener('mouseenter', () => {
+        gameplayVideo1.style.display = 'block'; // 비디오 표시
+        gameplayVideo1.play(); // 비디오 재생
     });
 
-    // 마우스가 이미지에서 벗어났을 때 비디오 숨기고 멈춤
-    mediaContainer.addEventListener('mouseleave', () => {
-        gameplayVideo.style.display = 'none'; // 비디오 숨기기
-        gameplayVideo.pause(); // 비디오 일시 정지
-        gameplayVideo.currentTime = 0; // 비디오 재시작 위치 초기화
+    mediaContainer1.addEventListener('mouseleave', () => {
+        gameplayVideo1.style.display = 'none'; // 비디오 숨기기
+        gameplayVideo1.pause(); // 비디오 일시 정지
+        gameplayVideo1.currentTime = 0; // 비디오 재시작 위치 초기화
+    });
+
+    // 두 번째 게임 - 이미지와 비디오, 컨테이너 엘리먼트 가져오기
+    const mediaContainer2 = document.querySelector('.col-md-6:nth-child(2) .media-container');
+    const gameplayVideo2 = document.getElementById('gameplay-video2');
+
+    // 두 번째 게임 - 마우스 이벤트 처리
+    mediaContainer2.addEventListener('mouseenter', () => {
+        gameplayVideo2.style.display = 'block'; // 비디오 표시
+        gameplayVideo2.play(); // 비디오 재생
+    });
+
+    mediaContainer2.addEventListener('mouseleave', () => {
+        gameplayVideo2.style.display = 'none'; // 비디오 숨기기
+        gameplayVideo2.pause(); // 비디오 일시 정지
+        gameplayVideo2.currentTime = 0; // 비디오 재시작 위치 초기화
     });
 
 });
