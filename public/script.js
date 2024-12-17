@@ -368,25 +368,21 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const gameCards = document.querySelectorAll("#more-games-container .col"); // 모든 게임 카드
-        let hasResults = false; // 검색 결과 여부
-
-        gameCards.forEach((card) => {
-            const title = card.querySelector(".card-title").textContent.toLowerCase();
-            const genre = card.querySelector(".card-text").textContent.toLowerCase();
-
-            // 검색어와 제목 또는 장르가 일치하면 표시, 아니면 숨김
-            if (title.includes(searchInput) || genre.includes(searchInput)) {
-                card.style.display = "block";
-                hasResults = true;
-            } else {
-                card.style.display = "none";
-            }
+        // allGames 배열에서 검색어와 일치하는 게임을 찾음
+        const filteredGames = allGames.filter(game => {
+            const title = game.title.toLowerCase();
+            const genre = game.genre.toLowerCase();
+            return title.includes(searchInput) || genre.includes(searchInput); // 제목 또는 장르가 검색어를 포함하는지 확인
         });
 
-        if (!hasResults) {
-            alert("검색 결과가 없습니다!");
-            return;
+        // 게임 목록을 갱신하고 페이지네이션 적용
+        if (filteredGames.length > 0) {
+            totalPages = Math.ceil(filteredGames.length / gamesPerPage); // 페이지 수 계산
+            currentPage = 1; // 첫 페이지로 리셋
+            displayGames(filteredGames); // 필터링된 게임 표시
+            setupPagination(filteredGames); // 페이지네이션 설정
+        } else {
+            alert("검색 결과가 없습니다!"); // 검색 결과가 없을 경우 알림
         }
     }
 
