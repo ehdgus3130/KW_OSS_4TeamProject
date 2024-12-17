@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const GameSchema = new mongoose.Schema({
   title: { type: String, required: true },
   genre: { type: String, required: true },
-  rating: { type: Number, required: true, min: 1, max: 5 },
+  likes: { type: Number, required: true, default: 0 }, // 기본값을 0으로 설정
   image: { type: String, required: true },
   link: { type: String, required: true },
 });
